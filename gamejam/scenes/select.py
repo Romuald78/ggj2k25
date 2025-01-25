@@ -50,7 +50,14 @@ class Select(Scene):
                         self.__players[ctrlID]['selected'] = True
                         self.__players[ctrlID]['elemental'] = self.__gfx_pos.index(gp) + 1
                         print('OK')
-
+        else:
+            next = len(self.__players) > 1
+            for p in self.__players:
+                if not self.__players[p]['selected']:
+                    next = False
+            if next:
+                self.world.switch_to_scene('InGame')
+                # TODO give player configs for ingame scene
 
 
         # print("After ADD")
