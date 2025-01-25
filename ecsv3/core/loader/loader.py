@@ -44,6 +44,15 @@ class ResourceLoader:
         return result
 
     @staticmethod
+    def getTextureReferenceFlipH(name):
+        result = None
+        if name in ResourceLoader.__textures:
+            result = ResourceLoader.__textures[name]['texture']
+            result = result.flip_left_right()
+        return result
+
+
+    @staticmethod
     def addFont(fontfile):
         # print(f"loading font {fontfile}...")
         if ResourceLoader.__fnt_cb is not None:

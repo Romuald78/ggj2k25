@@ -140,7 +140,10 @@ class GfxComponent(Component):
     def resize(self, width=None, height=None, keepRatio=True):
         ECSv3.error(f"Property has not been implemented yet for object {type(self)}")
 
-
+    def distance2To(self, other):
+        dx = self.x - other.x
+        dy = self.y - other.y
+        return dx*dx + dy*dy
 
 
 

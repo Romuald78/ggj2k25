@@ -7,7 +7,7 @@ from ecsv3.core.loader.loader import ResourceLoader
 
 class ArcadeFixed(GfxComponent):
 
-    def __init__(self, texture_ref, name='gfx_fix0', priority=1, anchor=GfxAnchor.CENTER, filter_color=(255,255,255,255)):
+    def __init__(self, texture_ref, name='gfx_fix0', priority=1, anchor=GfxAnchor.CENTER, filter_color=(255,255,255,255), flipH=False):
         super().__init__(name, priority, anchor)
         if isinstance(texture_ref, Sprite):
             # print('store sprite directly', name, texture_ref)
@@ -17,7 +17,10 @@ class ArcadeFixed(GfxComponent):
             self._spr = Sprite(texture_ref)
         else:
             # print('create sprite from texture name', name)
-            tex = ResourceLoader.getTextureReference(texture_ref)
+            if flipH:
+                tex = ResourceLoader.getTextureReferenceFlipH(texture_ref)
+            else:
+                tex = ResourceLoader.getTextureReference(texture_ref)
             # print(texture_ref, tex)
             self._spr = Sprite(tex)
             # print(self._spr)

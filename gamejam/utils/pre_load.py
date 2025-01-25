@@ -14,9 +14,19 @@ FNT_DIR = get_path('resources/fonts')
 
 PRE_LOAD_IMAGES = {
     # INTRO backgrounds
-    'rphstudio'   : f"{IMG_DIR}/backgrounds/rphstudio.png",
-    'arcade'      : f"{IMG_DIR}/backgrounds/arcade.png",
-    'gamejam'     : f"{IMG_DIR}/backgrounds/gamejam.png",
+    'rphstudio'    : f"{IMG_DIR}/backgrounds/rphstudio.png",
+    'arcade'       : f"{IMG_DIR}/backgrounds/arcade.png",
+    'gamejam'      : f"{IMG_DIR}/backgrounds/gamejam.png",
+    'splash'       : f"{IMG_DIR}/backgrounds/splash.png",
+    'select'       : f"{IMG_DIR}/backgrounds/select.png",
+    'ingame'       : f"{IMG_DIR}/backgrounds/ingame.png",
+
+    'bubble_select': f"{IMG_DIR}/characters/bubble_select.png",
+
+    'front_hero1'  : f"{IMG_DIR}/characters/front_hero1.png",
+    'front_hero2'  : f"{IMG_DIR}/characters/front_hero2.png",
+    'front_hero3'  : f"{IMG_DIR}/characters/front_hero3.png",
+    'front_hero4'  : f"{IMG_DIR}/characters/front_hero4.png"
 
 }
 
