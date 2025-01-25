@@ -6,8 +6,10 @@ from ecsv3.core.scenes.scene import Scene, SystemGroup
 from ecsv3.arcade_layer.systems.arcade_gfx_system import ArcadeGfxSystem
 from ecsv3.core.system.input_system import InputSystem
 from ecsv3.core.system.script_system import ScriptSystem
+from gamejam.components.scripts.gen_bubble import GenBubbleScript
+from gamejam.components.scripts.move_bubble import MoveBubble
+from gamejam.entities.bubble_factory import BubbleFactory
 from gamejam.entities.player_entity import PlayerCreation
-from gamejam.entities.player_select import PlayerSelect
 
 
 class InGame(Scene):
@@ -22,6 +24,7 @@ class InGame(Scene):
         # LOCALS
         # =========================================
         self.__players = {}
+        self.__bubbles = {}
 
         # =========================================
         # SYSTEMS
@@ -58,7 +61,7 @@ class InGame(Scene):
         positions = [(-1, 0), (1, 0)]
         if len(params) == 3:
             # select random up/down
-            v = -1 #(random.randint(0,1) * 2) - 1
+            v = (random.randint(0,1) * 2) - 1
             positions.append((0, v))
         elif len(params) == 4:
             positions.append((0, -1))
@@ -70,16 +73,33 @@ class InGame(Scene):
         # Create all player entities
         i = 0
         for ctrlID in self.__playerCfg:
+            # PLAYER
             eltID = params[ctrlID]['elemental']
             pos   = positions[i]
             i += 1
             play_ent = PlayerCreation(f"play_ent_{ctrlID}",
                                       ctrlID, eltID, pos,
-                                      self.width, self.height)
+                                      self.width, self.height - 250)
             self.__players[ctrlID] = play_ent
+            # add entry into the bubble dictionary
+            self.__bubbles[ctrlID] = []
+            # create move bubble component for each player and add component to the player
+            scrmov = MoveBubble(f"mvbub_{ctrlID}",
+                                play_ent.limits,
+                                self.__bubbles[ctrlID])
+            play_ent.add_component(scrmov)
+            # add player entity to scene
             self.add_entity(play_ent)
+
+            # CREATE bubble generator entity
+            # Create bub factory (one per player)
+            bub_fact = BubbleFactory(self.width, self.height - 250, pos, ctrlID, pos)
+            bub_gen_ent = Entity(f"bub_gen_ent_{ctrlID}")
+            gen_script  = GenBubbleScript(f"gen_bub_scr{ctrlID}", bub_fact, self.__bubbles[ctrlID])
+            bub_gen_ent.add_component(gen_script)
+            self.add_entity(bub_gen_ent)
+
 
     def exit(self, params=None):
         pass
-
 

@@ -51,7 +51,7 @@ class Select(Scene):
                         # now select this player to this hero
                         self.__players[ctrlID]['selected'] = True
                         self.__players[ctrlID]['elemental'] = self.__gfx_pos.index(gp) + 1
-                        gfx_bubble.scale *= 1.67
+                        gfx_bubble.scale *= 1.75
                         gfx_bubble.x = gp.x
                         gfx_bubble.y = gp.y
 
@@ -80,7 +80,7 @@ class Select(Scene):
                 self.__players[ctrlID]['selected'] = False
                 ent = self.__players[ctrlID]['entity']
                 gfx_bubble = ent[f"bubble_select_{ctrlID}"]
-                gfx_bubble.scale /= 1.67
+                gfx_bubble.scale /= 1.75
         elif len(self.__players) == 0:
             # we can go back to previous scene
             self.world.switch_to_scene('Splash')

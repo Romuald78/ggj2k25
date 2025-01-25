@@ -1,5 +1,6 @@
 
 import arcade
+from arcade import Rect, LRBT
 
 from ecsv3.core.system.system_types import EventType
 from ecsv3.core import world
@@ -28,7 +29,7 @@ class ArcadeApp(arcade.Window):
         # Return button name according to controller mapping
         return result
 
-    def __init__(self, world, width = 1920, height = 1080, title = 'ECSv3 Arcade App'):
+    def __init__(self, world, width=1920, height=1080, title = 'ECSv3 Arcade App'):
         super().__init__(width, height, title)
         self.__world      = world
         self.__game_ctrl  = {}
@@ -37,6 +38,16 @@ class ArcadeApp(arcade.Window):
 
         # get window and give access to world
         self.__world.set_window(self)
+
+
+        # TODO
+        # # Add camera
+        # self.__main_camera = arcade.camera.Camera2D(
+        #                                 viewport=LRBT(0, self.screen.width,
+        #                                               0, self.screen.height),
+        #                                 projection=LRBT(0, width, 0, height),
+        #                                 position=(0, 0)
+        #                                 )
 
         # get ___game controllers
         gamepads = arcade.get_game_controllers()
@@ -59,6 +70,8 @@ class ArcadeApp(arcade.Window):
 
     def on_draw(self):
         self.clear()
+        # TODO Camera
+        # self.__main_camera.use()
         self.__world.draw()
         if self.__displayFPS:
             fps = ('00' + str(int(round(1/self.__frame_time, 0))))[-2:]
@@ -123,3 +136,7 @@ def run(world, config):
     app.center_window()
     # Show time !
     arcade.run()
+
+
+
+

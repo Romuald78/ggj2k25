@@ -21,7 +21,7 @@ PRE_LOAD_IMAGES = {
     'select'       : f"{IMG_DIR}/backgrounds/select.png",
     'ingame'       : f"{IMG_DIR}/backgrounds/ingame.png",
 
-    'bubble_select': f"{IMG_DIR}/characters/bubble_select.png",
+    'bubble_select': f"{IMG_DIR}/ui/bubble.png",
 
     'front_hero1'  : f"{IMG_DIR}/characters/front_hero1.png",
     'front_hero2'  : f"{IMG_DIR}/characters/front_hero2.png",
@@ -30,9 +30,10 @@ PRE_LOAD_IMAGES = {
 
     'back_hero1': f"{IMG_DIR}/characters/back_hero1.png",
     'back_hero2': f"{IMG_DIR}/characters/back_hero2.png",
-    # 'back_hero3': f"{IMG_DIR}/characters/back_hero3.png",
-    'back_hero4': f"{IMG_DIR}/characters/back_hero4.png"
+    'back_hero3': f"{IMG_DIR}/characters/back_hero3.png",
+    'back_hero4': f"{IMG_DIR}/characters/back_hero4.png",
 
+    'bubble'    : f"{IMG_DIR}/ui/bubble.png"
 }
 
 
