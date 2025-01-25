@@ -45,12 +45,15 @@ class InGame(Scene):
         # =========================================
         self.__staticGfx = Entity('static_gfx')
         # Background
-        gfx_bg = ArcadeFixed('ingame', 'background')
-        gfx_bg.x = self.width / 2
-        gfx_bg.y = self.height / 2
-        gfx_bg.resize(width=self.height, height=self.height, keepRatio=False)
-        self.__staticGfx.add_component(gfx_bg)
-
+        gfx_bg1 = ArcadeFixed('back_land1', 'back_land1', priority=5)
+        gfx_bg2 = ArcadeFixed('back_land2', 'back_land2', priority=5)
+        gfx_bg3 = ArcadeFixed('back_land3', 'back_land3', priority=5)
+        gfx_bg4 = ArcadeFixed('back_land4', 'back_land4', priority=5)
+        self.__allgfx_bg = [gfx_bg1, gfx_bg2, gfx_bg3, gfx_bg4]
+        for gfx in self.__allgfx_bg:
+            gfx.x = 10000
+            gfx.y = 10000
+            self.__staticGfx.add_component(gfx)
 
         # Register entities
         self.add_entity(self.__staticGfx)
@@ -72,6 +75,10 @@ class InGame(Scene):
         self.__playerCfg = params
         # Create all player entities
         i = 0
+        final_angles = []
+        final_gfx    = []
+        landW = self.width
+        landH = self.height - 250
         for ctrlID in self.__playerCfg:
             # PLAYER
             eltID = params[ctrlID]['elemental']
@@ -79,7 +86,7 @@ class InGame(Scene):
             i += 1
             play_ent = PlayerCreation(f"play_ent_{ctrlID}",
                                       ctrlID, eltID, pos,
-                                      self.width, self.height - 250)
+                                      landW, landH)
             self.__players[ctrlID] = play_ent
             # add entry into the bubble dictionary
             self.__bubbles[ctrlID] = []
@@ -98,6 +105,35 @@ class InGame(Scene):
             gen_script  = GenBubbleScript(f"gen_bub_scr{ctrlID}", bub_fact, self.__bubbles[ctrlID])
             bub_gen_ent.add_component(gen_script)
             self.add_entity(bub_gen_ent)
+
+            # resize, move, rotate
+            land = self.__staticGfx[f"back_land{eltID}"]
+            final_gfx.append(land)
+            if pos == (-1, 0):
+                # no rotation
+                final_angles.append(0)
+            elif pos == (1, 0):
+                final_angles.append(180)
+            elif pos == (0, -1):
+                final_angles.append(270)
+            elif pos == (0, 1):
+                final_angles.append(90)
+
+        for gfx in self.__allgfx_bg:
+            if gfx not in final_gfx:
+                final_gfx.append(gfx)
+                for a in range(4):
+                    if a*90 not in final_angles:
+                        final_angles.append(a*90)
+                        break
+            gfx.x = landW / 2
+            gfx.y = landH / 2
+            gfx.resize(landW, landH)
+
+        for i in range(4):
+            final_gfx[i].angle = final_angles[i]
+            print(final_gfx[i], final_angles[i])
+
 
 
     def exit(self, params=None):

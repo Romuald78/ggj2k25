@@ -19,7 +19,11 @@ PRE_LOAD_IMAGES = {
     'gamejam'      : f"{IMG_DIR}/backgrounds/gamejam.png",
     'splash'       : f"{IMG_DIR}/backgrounds/splash.png",
     'select'       : f"{IMG_DIR}/backgrounds/select.png",
-    'ingame'       : f"{IMG_DIR}/backgrounds/ingame.png",
+
+    'back_land1': f"{IMG_DIR}/landscape/back_1.png",
+    'back_land2': f"{IMG_DIR}/landscape/back_2.png",
+    'back_land3': f"{IMG_DIR}/landscape/back_3.png",
+    'back_land4': f"{IMG_DIR}/landscape/back_4.png",
 
     'bubble_select': f"{IMG_DIR}/ui/bubble.png",
 

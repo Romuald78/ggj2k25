@@ -19,13 +19,15 @@ class BubbleFactory:
     def __init__(self, w, h, pos, ctrlID, vec_dir):
         # left right top down
         limits = [w/2 - h/2, w/2 + h/2, h, 0]
-        self.__limits    = limits
+        self.__limits     = limits
         # parameters
-        self.__pos0      = pos
-        self.__ctrlID    = ctrlID
-        self.__vec_dir   = vec_dir
+        self.__pos0       = pos
+        self.__ctrlID     = ctrlID
+        self.__vec_dir    = vec_dir
         # Locals
-        self.__count     = 0
+        self.__count      = 0
+        self.__dest_angle = 0
+        self.__last_angle = 0
 
 
     def add_big_bubble(self, ctrlID, vec_dir):
@@ -39,6 +41,9 @@ class BubbleFactory:
         size = 25
         if self.__count % 10 == 0:
             size = 50
+        # maxangle
+        MAX_ANGLE = 40
+
 
         # Entity
         ent = Entity(f"bub_ent_{self.__ctrlID}_{self.__count}")
@@ -50,8 +55,14 @@ class BubbleFactory:
         gfx.resize(width=size)
         ent.add_component(gfx)
         # compile direction angle (random)
-        angle  = math.atan2(self.__vec_dir[1], self.__vec_dir[0]) * 180 / math.pi
-        angle += random.randint(-40, 40)
+        angle0  = math.atan2(self.__vec_dir[1], self.__vec_dir[0]) * 180 / math.pi
+        angle0 -= MAX_ANGLE
+        angle1  = angle0 + (2 * MAX_ANGLE)
+
+        angle = self.__last_angle
+        angle += random.randint(-20, 20)
+        angle  = min(angle1, max(angle0, angle))
+        # print(angle0, angle, angle1)
         # Add data component
         dataang = DataAngle(f"ang_{self.__ctrlID}_{self.__count}", angle)
         ent.add_component(dataang)

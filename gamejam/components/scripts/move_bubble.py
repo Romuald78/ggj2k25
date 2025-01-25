@@ -1,10 +1,11 @@
+import math
 
 from ecsv3.core.component.script.script_comp import ScriptComponent
 
 
 class MoveBubble(ScriptComponent):
 
-    SPEED = 30
+    SPEED = 10
 
     # -----------------------------------------
     # ABSTRACT METHOD
@@ -21,9 +22,11 @@ class MoveBubble(ScriptComponent):
                 if 'gfx_' in comp.name:
                     gfx = comp
                 if 'ang_' in comp.name:
-                    ang = comp
-            # print(ang.angle, gfx)
-        # print()
+                    ang = comp.angle
+            ang = ang * math.pi / 180
+            gfx.move(math.cos(ang) * MoveBubble.SPEED,
+                     math.sin(ang) * MoveBubble.SPEED)
+
     # -----------------------------------------
     # CONSTRUCTOR
     # -----------------------------------------

@@ -4,15 +4,15 @@ from ecsv3.core.component.script.script_comp import ScriptComponent
 
 class GenBubbleScript(ScriptComponent):
 
-    INTERVAL = 1
+    INTERVAL = 0.25
 
     # -----------------------------------------
     # ABSTRACT METHOD
     # -----------------------------------------
     def execute(self, delta_time = 1/60):
         self.__timer += delta_time
-        if self.__timer >= 1:
-            self.__timer -= 1
+        if self.__timer >= GenBubbleScript.INTERVAL:
+            self.__timer -= GenBubbleScript.INTERVAL
             # create projectile entity using factory
             ent_bub = self.__factory.create()
             # add entity to property list
