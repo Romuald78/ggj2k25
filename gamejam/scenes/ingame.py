@@ -58,7 +58,7 @@ class InGame(Scene):
         positions = [(-1, 0), (1, 0)]
         if len(params) == 3:
             # select random up/down
-            v = (random.randint(0,1) * 2) - 1
+            v = -1 #(random.randint(0,1) * 2) - 1
             positions.append((0, v))
         elif len(params) == 4:
             positions.append((0, -1))

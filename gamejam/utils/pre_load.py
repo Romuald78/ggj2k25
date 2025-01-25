@@ -26,7 +26,12 @@ PRE_LOAD_IMAGES = {
     'front_hero1'  : f"{IMG_DIR}/characters/front_hero1.png",
     'front_hero2'  : f"{IMG_DIR}/characters/front_hero2.png",
     'front_hero3'  : f"{IMG_DIR}/characters/front_hero3.png",
-    'front_hero4'  : f"{IMG_DIR}/characters/front_hero4.png"
+    'front_hero4'  : f"{IMG_DIR}/characters/front_hero4.png",
+
+    'back_hero1': f"{IMG_DIR}/characters/back_hero1.png",
+    'back_hero2': f"{IMG_DIR}/characters/back_hero2.png",
+    # 'back_hero3': f"{IMG_DIR}/characters/back_hero3.png",
+    'back_hero4': f"{IMG_DIR}/characters/back_hero4.png"
 
 }
 

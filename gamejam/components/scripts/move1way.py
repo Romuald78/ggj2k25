@@ -11,7 +11,7 @@ class MoveOneWay(ScriptComponent):
     # -----------------------------------------
     def execute(self, delta_time = 1/60):
         # Move + limits
-        value = self.__axis.value * MoveOneWay.SPEED
+        value = self.__axis.value * MoveOneWay.SPEED * delta_time * 60
         for gfx in self.__gfxs:
             if self.__vertical:
                 gfx.y += value
