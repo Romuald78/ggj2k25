@@ -22,9 +22,12 @@ class PlayerSelect(Entity):
         gfx_front = ArcadeFixed(f"bubble_select",
                                 f"bubble_select_{ctrlID}",
                                 priority=10)
+        # resize bubble
+        gfx_front.resize(width=200)
         # set in the middle of the screen
         gfx_front.x = random.randint(-100,100) + x0
         gfx_front.y = random.randint(-100,100) + y0
+        gfx_front.color = (255,255,255,16)
 
         # axis X and Y to move
         x = GamepadAxis(f"axisX_{ctrlID}", 'X',gamepad_id=ctrlID)

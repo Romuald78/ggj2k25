@@ -6,6 +6,7 @@ from ecsv3.arcade_layer.systems.arcade_gfx_system import ArcadeGfxSystem
 from ecsv3.core.system.input_system import InputSystem
 from ecsv3.core.system.script_system import ScriptSystem
 from gamejam.components.scripts.select_handle_player import HandlePlayer
+from gamejam.components.scripts.select_highlight import SelectHighLight
 from gamejam.entities.player_select import PlayerSelect
 
 
@@ -28,6 +29,7 @@ class Select(Scene):
                                       'selected' : False,
                                       'elemental': None
                                       }
+
         elif not self.__players[ctrlID]['selected']:
             # Select player if it is in a correct place
             ent = self.__players[ctrlID]['entity']
@@ -49,15 +51,17 @@ class Select(Scene):
                         # now select this player to this hero
                         self.__players[ctrlID]['selected'] = True
                         self.__players[ctrlID]['elemental'] = self.__gfx_pos.index(gp) + 1
-                        print('OK')
+                        gfx_bubble.scale *= 1.67
+                        gfx_bubble.x = gp.x
+                        gfx_bubble.y = gp.y
+
         else:
             next = len(self.__players) > 1
             for p in self.__players:
                 if not self.__players[p]['selected']:
                     next = False
             if next:
-                self.world.switch_to_scene('InGame')
-                # TODO give player configs for ingame scene
+                self.world.switch_to_scene('InGame', enter_params=self.__players)
 
 
         # print("After ADD")
@@ -74,6 +78,9 @@ class Select(Scene):
             else:
                 # just deselect
                 self.__players[ctrlID]['selected'] = False
+                ent = self.__players[ctrlID]['entity']
+                gfx_bubble = ent[f"bubble_select_{ctrlID}"]
+                gfx_bubble.scale /= 1.67
         elif len(self.__players) == 0:
             # we can go back to previous scene
             self.world.switch_to_scene('Splash')
@@ -114,10 +121,10 @@ class Select(Scene):
         handle_ply = HandlePlayer ('handle_player',
                                    button_add, button_rmv,
                                    self.add_player, self.remove_player)
-
         self.__controls.add_component(button_add)
         self.__controls.add_component(button_rmv)
         self.__controls.add_component(handle_ply)
+
 
         self.__staticGfx = Entity('static_gfx')
         # Background
@@ -134,10 +141,10 @@ class Select(Scene):
         gfx_h2.resize(height=Select.SIZE)
         gfx_h3.resize(height=Select.SIZE)
         gfx_h4.resize(height=Select.SIZE)
-        gfx_h1.color = (255,255,255,128)
-        gfx_h2.color = (255,255,255,128)
-        gfx_h3.color = (255,255,255,128)
-        gfx_h4.color = (255,255,255,128)
+        gfx_h1.color = (255,255,255,192)
+        gfx_h2.color = (255,255,255,192)
+        gfx_h3.color = (255,255,255,192)
+        gfx_h4.color = (255,255,255,192)
         dw = (self.width - (4 * Select.SIZE)) / 5
         gfx_h1.x = dw + Select.SIZE/2
         gfx_h2.x = gfx_h1.x + Select.SIZE + dw
@@ -152,12 +159,19 @@ class Select(Scene):
         self.__staticGfx.add_component(gfx_h3)
         self.__staticGfx.add_component(gfx_h4)
 
+        # store select positions
+        self.__gfx_pos = [gfx_h1, gfx_h2, gfx_h3, gfx_h4]
+
+        # add highligh script to controls
+        highlight = SelectHighLight('highlight', self.__players, self.__gfx_pos)
+        self.__controls.add_component(highlight)
+
         # Add all entities
         self.add_entity(self.__staticGfx)
         self.add_entity(self.__controls)
 
-        # store select positions
-        self.__gfx_pos = [gfx_h1, gfx_h2, gfx_h3, gfx_h4]
+
+
 
     def enter(self, params=None):
         pass
