@@ -1,3 +1,5 @@
+import arcade
+
 from ecsv3.arcade_layer.components.arcade_gfx import ArcadeFixed
 from ecsv3.core.component.input.gamepad.gamepad_button import GamepadButton
 from ecsv3.core.entity import Entity
@@ -55,7 +57,8 @@ class Select(Scene):
                         gfx_bubble.scale *= 2.0
                         gfx_bubble.x = gp.x
                         gfx_bubble.y = gp.y
-
+                        # play music according to player
+                        self.__voices[self.__players[ctrlID]['elemental'] - 1].play()
         else:
             next = len(self.__players) > 1
             for p in self.__players:
@@ -98,6 +101,11 @@ class Select(Scene):
         # =========================================
         self.__players = {}
 
+        self.__voices = []
+        self.__voices.append(arcade.Sound('resources/sounds/select1.mp3'))
+        self.__voices.append(arcade.Sound('resources/sounds/select2.mp3'))
+        self.__voices.append(arcade.Sound('resources/sounds/select3.mp3'))
+        self.__voices.append(arcade.Sound('resources/sounds/select4.mp3'))
 
         # =========================================
         # SYSTEMS

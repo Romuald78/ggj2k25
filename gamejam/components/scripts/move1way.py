@@ -1,10 +1,11 @@
 
 from ecsv3.core.component.script.script_comp import ScriptComponent
+from launchers.arcade.default_config import RATIO
 
 
 class MoveOneWay(ScriptComponent):
 
-    SPEED = 30
+    SPEED = 30 * RATIO
 
     # -----------------------------------------
     # ABSTRACT METHOD

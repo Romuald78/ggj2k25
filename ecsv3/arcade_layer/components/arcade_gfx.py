@@ -315,3 +315,4 @@ class ArcadeText(ArcadeFixed):
                          priority=priority,
                          anchor=anchor)
         self.resize(w, h)
+

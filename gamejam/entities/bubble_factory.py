@@ -48,7 +48,7 @@ class BubbleFactory:
         # increase count for bubble name
         self.__count += 1
         big = False
-        if self.__count % 3 == 0 and self.__count % 12 != 0 and len(self.__bub2send) > 0:
+        if self.__count % 2 == 0 and self.__count % 12 != 0 and len(self.__bub2send) > 0:
                 big = True
                 big_color = self.__bub2send[0]
                 self.__bub2send = self.__bub2send[1:]

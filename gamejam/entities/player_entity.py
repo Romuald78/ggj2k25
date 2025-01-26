@@ -40,6 +40,7 @@ class PlayerCreation(Entity):
             shadow.anchor = GfxAnchor.BOTTOM
             shadow.x = gfx_idle.x
             shadow.y = gfx_idle.y
+            shadow.color = (0,0,0,128)
 
             # Move axis (vertical)
             axis = GamepadAxis(f"axisY_{ctrlID}", 'Y', gamepad_id=ctrlID)

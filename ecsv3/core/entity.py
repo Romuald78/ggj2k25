@@ -54,6 +54,7 @@ class Entity(Component):
         # link this component back to the entity
         comp.set_entity(self)
 
+
     def remove_all_components(self):
         for name in self.__components:
             comp = self.__components[name]

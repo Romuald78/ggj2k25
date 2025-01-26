@@ -10,10 +10,10 @@ from ecsv3.core.system.input_system import InputSystem
 from ecsv3.core.system.script_system import ScriptSystem
 from gamejam.components.scripts.gen_bubble import GenBubbleScript
 from gamejam.components.scripts.move_bubble import MoveBubble
+from gamejam.components.scripts.show_scores import ShowScore
 from gamejam.entities.bubble_factory import BubbleFactory
 from gamejam.entities.player_entity import PlayerCreation
 from launchers.arcade.default_config import RATIO
-
 
 class InGame(Scene):
 
@@ -30,8 +30,8 @@ class InGame(Scene):
     def __init__(self, world, name):
         super().__init__(world, name)
 
-        self.__music = arcade.Sound('resources/sounds/music.mp3')
-        self.__music.play()
+
+
 
         # =========================================
         # LOCALS
@@ -53,6 +53,15 @@ class InGame(Scene):
         system = ArcadeGfxSystem('Gfx', priority=3)
         self.add_system(system, SystemGroup.DRAW)
 
+        # Score ENTITY
+        self.__scores = [0, 0, 0, 0]
+
+
+
+        self.__music = arcade.Sound('resources/sounds/music.mp3')
+
+
+
 
         # =========================================
         # GFX
@@ -67,6 +76,33 @@ class InGame(Scene):
         gfx_bg3.color = (230,255,230)
         gfx_bg4 = ArcadeFixed('back_land4', 'back_land4', priority=5)
         gfx_bg4.color = (255,230,230)
+        backing = ArcadeFixed('back_ingame', 'back_ingame')
+        backing.resize(width=self.width, height=self.height, keepRatio=False)
+        backing.x = self.width / 2
+        backing.y = self.height / 2
+        self.__staticGfx.add_component(backing)
+
+        hro1 = ArcadeFixed('front_hero1', 'face1', priority=80, flipH=True)
+        hro2 = ArcadeFixed('front_hero2', 'face2', priority=80)
+        hro3 = ArcadeFixed('front_hero3', 'face3', priority=80, flipH=True)
+        hro4 = ArcadeFixed('front_hero4', 'face4', priority=80)
+        hro1.scale = RATIO * 1.5
+        hro2.scale = RATIO * 1.5
+        hro3.scale = RATIO * 1.5
+        hro4.scale = RATIO * 1.5
+        hro1.x = self.width * 1/10
+        hro2.x = self.width * 9/10
+        hro3.x = self.width * 1/10
+        hro4.x = self.width * 9/10
+        hro1.y = self.height * 4/5
+        hro2.y = self.height * 4/5
+        hro3.y = self.height * 1/5
+        hro4.y = self.height * 1/5
+        self.__staticGfx.add_component(hro1)
+        self.__staticGfx.add_component(hro2)
+        self.__staticGfx.add_component(hro3)
+        self.__staticGfx.add_component(hro4)
+
         cross   = ArcadeFixed('cross', 'cross', priority=6)
         self.__allgfx_bg = [gfx_bg1, gfx_bg2, gfx_bg3, gfx_bg4, cross]
         for gfx in self.__allgfx_bg:
@@ -121,7 +157,7 @@ class InGame(Scene):
             scrmov = MoveBubble(f"mvbub_{ctrlID}",
                                 play_ent.limits,
                                 self.__bubbles[ctrlID],
-                                self.__players[ctrlID], ctrlID, eltID, pos, bub_fact, self.getFactoryFromID)
+                                self.__players[ctrlID], ctrlID, eltID, pos, bub_fact, self.getFactoryFromID, self.__scores)
             play_ent.add_component(scrmov)
 
             # add player entity to scene
@@ -161,7 +197,39 @@ class InGame(Scene):
             final_gfx[i].angle = final_angles[i]
             # print(final_gfx[i], final_angles[i])
 
+        # Start music before playing
+        self.__music.play(loop=True)
+
 
     def exit(self, params=None):
         pass
 
+    def draw(self):
+        super().draw()
+
+        arcade.draw_text(f"ONDINE : {self.__scores[0]}", font_size=15,
+                         x=self.width * 1/20 * RATIO  ,
+                         y=self.height* 9/10 *RATIO,
+                         color=(128, 128, 255),
+                         align='left')
+        arcade.draw_text(f"SPARK : {self.__scores[1]}", font_size=15,
+                         x=self.width * 40/30 * RATIO  ,
+                         y=self.height* 9/10 *RATIO,
+                         color=(255, 255, 128),
+                         align='right')
+        arcade.draw_text(f"TINKER BELL : {self.__scores[2]}", font_size=15,
+                         x=self.width * 1/20 * RATIO  ,
+                         y=self.height* 6/10 *RATIO,
+                         color=(128, 255, 128),
+                         align='left')
+        arcade.draw_text(f"DOOM : {self.__scores[3]}", font_size=15,
+                         x=self.width * 40/30 * RATIO  ,
+                         y=self.height* 6/10 *RATIO,
+                         color=(255, 128, 128),
+                         align='right')
+
+
+# colors = [,(255, 255, 64),(0, 220, 0),(255, 0, 0)]
+#
+# heroes = ['ONDINE', 'SPARK', 'TINKER BELL', 'DOOM']
+# for hero in heroes:

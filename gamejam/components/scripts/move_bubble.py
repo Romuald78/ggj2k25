@@ -9,7 +9,7 @@ class MoveBubble(ScriptComponent):
 
 
     SPEED = 10 * RATIO
-    MAX_DST =  200 * RATIO
+    MAX_DST =  300 * RATIO
 
     COLORS = [(0, 0, 220),
               (255, 255, 64),
@@ -34,6 +34,8 @@ class MoveBubble(ScriptComponent):
         x1 = self.__shadow.x
         y1 = self.__shadow.y
 
+        self.__shadow.color = (0, 0, 0, 128)
+
         for ent in self.__ent_lst:
             ang = 0
             gfx = None
@@ -50,15 +52,16 @@ class MoveBubble(ScriptComponent):
             y2 = gfx.y
             colliding = self.__collision(x1, y1, x2, y2, 50*RATIO)
 
-            if tuple(gfx.color)[:3] != (255,255,255):
+            if tuple(gfx.color)[:3] != (255,255,255) and first_big_gfx is None:
                 first_big_gfx = gfx
                 first_big_ent = ent
 
             if colliding and tuple(gfx.color)[:3] == (255,255,255):
                 # ========= GET SMALL BUBBLE ===========
-                # TODO add player score !!
                 self.__ent_lst.remove(ent)
                 ent.scene.remove_entity(ent.name)
+                # add small score
+                self.__scores[self.__eltID-1] += 1
             else:
                 # check limits +
                 v1 = [-gfx.x, gfx.x, gfx.y, -gfx.y]
@@ -80,9 +83,12 @@ class MoveBubble(ScriptComponent):
         if first_big_ent is not None:
             x2 = first_big_gfx.x
             y2 = first_big_gfx.y
-            colliding = self.__collision(x1, y1, x2, y2, 75*RATIO)
+            colliding = self.__collision(x1, y1, x2, y2, 85*RATIO)
 
             if not colliding:
+
+                self.__shadow.scale = self.__shadow_scale
+
                 # consume all button press
                 rising_flag = False
                 for button in self.__buttons:
@@ -93,8 +99,11 @@ class MoveBubble(ScriptComponent):
                     # remove first big
                     self.__ent_lst.remove(first_big_ent)
                     first_big_ent.scene.remove_entity(first_big_ent.name)
-
             else:
+
+                self.__shadow.color = (255,255,255,128)
+                self.__shadow.scale = self.__shadow_scale * 1.25
+
                 # check buttons according to color
                 bubclr = tuple(first_big_gfx.color)[:3]
                 idxclr = MoveBubble.COLORS.index(bubclr) + 1  # player number
@@ -112,6 +121,8 @@ class MoveBubble(ScriptComponent):
                     otherEltID = random.choice(eltIDs)
                     otherFact = self.__getOtherFact(otherEltID, self.__eltID)
                     otherFact.add_big_bubble(self.__ctrlID, self.__eltID)
+                    # add BIG score
+                    self.__scores[self.__eltID-1] += 6
                 else:
                     # consume all button press
                     rising_flag = False
@@ -122,7 +133,6 @@ class MoveBubble(ScriptComponent):
                         # pressed a bad button while colliding
                         self.__ent_lst.remove(first_big_ent)
                         first_big_ent.scene.remove_entity(first_big_ent.name)
-
         else:
             # consume all button press
             rising_flag = False
@@ -132,9 +142,10 @@ class MoveBubble(ScriptComponent):
     # -----------------------------------------
     # CONSTRUCTOR
     # -----------------------------------------
-    def __init__(self, name, limits, ent_lst, player, ctrlID, eltID, pos, bubFactory, cbgetFac):
+    def __init__(self, name, limits, ent_lst, player, ctrlID, eltID, pos, bubFactory, cbgetFac, scores):
         super().__init__(name)
         self.__limits  = limits
+        self.__scores  = scores
         self.__ent_lst = ent_lst
         self.__player = player
         self.__loaded = False
@@ -145,7 +156,7 @@ class MoveBubble(ScriptComponent):
         self.__shadow = self.__player[f"shadow_{self.__eltID}_{self.__ctrlID}"]
         self.__factory = bubFactory
         self.__getOtherFact = cbgetFac
-
+        self.__shadow_scale = self.__shadow.scale
         self.__buttons = []
         # order = LEFT RIGHT TOP BOTTOM
         self.__buttons.append(self.__player[f"buttonB_{self.__ctrlID}"])
