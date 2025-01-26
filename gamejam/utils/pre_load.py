@@ -38,7 +38,8 @@ PRE_LOAD_IMAGES = {
     'back_hero3': f"{IMG_DIR}/characters/back_hero3.png",
     'back_hero4': f"{IMG_DIR}/characters/back_hero4.png",
 
-    'bubble'    : f"{IMG_DIR}/ui/bubble.png"
+    'bubble'    : f"{IMG_DIR}/ui/bubble.png",
+    'bubble_big': f"{IMG_DIR}/ui/bubble_big.png"
 }
 
 

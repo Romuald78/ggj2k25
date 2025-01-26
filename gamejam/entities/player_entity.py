@@ -38,7 +38,7 @@ class PlayerCreation(Entity):
             move1way = MoveOneWay(f"move1way_{ctrlID}",
                                   axis, [gfx_idle,],
                                   self.__limits, vertical=True,
-                                  margin=playerMargin)
+                                  margin=playerMargin, flipH=flip)
 
             # add components
             self.add_component(axis)

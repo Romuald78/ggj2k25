@@ -138,7 +138,7 @@ class InGame(Scene):
 
         for i in range(4):
             final_gfx[i].angle = final_angles[i]
-            print(final_gfx[i], final_angles[i])
+            # print(final_gfx[i], final_angles[i])
 
 
 

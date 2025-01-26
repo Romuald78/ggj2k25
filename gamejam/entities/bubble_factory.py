@@ -24,15 +24,18 @@ class BubbleFactory:
         self.__ctrlID     = ctrlID
         self.__vec_dir    = vec_dir
         # Locals
+        self.__bub2send   = {}
         self.__count      = 0
-        self.__dest_angle = 0
-        self.__last_angle = 0
+        self.__dest_angle = 0   # variation destination
+        self.__last_angle = 0    # last variation
+
         self.__color      = [
-            (0,255,0),
-            (255,255,0),
-            (0,255,0),
+            (0,0,220),
+            (255,255,128),
+            (0,220,0),
             (255,0,0)
         ][eltID-1]
+
 
 
     def add_big_bubble(self, ctrlID, vec_dir):
@@ -43,19 +46,26 @@ class BubbleFactory:
     def create(self):
         # increase count for bubble name
         self.__count += 1
+        big = False
+        # if self.__count %  3 == 0 : #and len(self.__bub2send) >= 0:
+        #         big = True
+        if self.__count % 12 == 0:
+            big = True
         # check if we have to create a big bubble
         size = 25
         clr  = (255,255,255)
-        if self.__count % 10 == 0:
-            size = 50
+        if big:
+            size = 65
             clr = self.__color
-        # maxangle
-        MAX_ANGLE = 40
+
 
         # Entity
         ent = Entity(f"bub_ent_{self.__ctrlID}_{self.__count}")
         # GFX
-        gfx = ArcadeFixed(f"bubble", f"gfx_{self.__ctrlID}_{self.__count}",
+        texture_ref = 'bubble'
+        if big:
+            texture_ref += '_big'
+        gfx = ArcadeFixed(texture_ref, f"gfx_{self.__ctrlID}_{self.__count}",
                           priority=90)
         gfx.x = (self.__limits[0] + self.__limits[1]) / 2
         gfx.y = (self.__limits[2] + self.__limits[3]) / 2
@@ -63,17 +73,24 @@ class BubbleFactory:
         gfx.color = clr
         ent.add_component(gfx)
         # compile direction angle (random)
+        MAX_ANGLE = 40
+        STEP = 4.325
         angle0  = math.atan2(self.__vec_dir[1], self.__vec_dir[0]) * 180 / math.pi
-        # angle0 -= MAX_ANGLE + 360
-        # angle0  = int(angle0) % 360
-        # angle1  = angle0 + (2 * MAX_ANGLE) # no modulo to keep angle0 < angle < angle1
-        #
-        # angle  = self.__last_angle
-        # angle += random.randint(-20, 20)
-        # angle  = angle % 360
-        # angle  = min(angle1, max(angle0, angle))
-        angle = angle0
-        # print(angle0, angle, angle1)
+        if self.__dest_angle > self.__last_angle:
+            self.__last_angle += STEP
+        if self.__dest_angle < self.__last_angle:
+            self.__last_angle -= STEP
+        diff = abs(self.__dest_angle - self.__last_angle)
+        diff = max(-MAX_ANGLE, min(MAX_ANGLE, diff))
+        if abs(diff) <= STEP:
+            diff = 0
+            if self.__dest_angle >= 0:
+                self.__dest_angle = random.randint(-MAX_ANGLE, int(-MAX_ANGLE/2))
+            else:
+                self.__dest_angle = random.randint(int(MAX_ANGLE/2), MAX_ANGLE)
+
+        # set new angle
+        angle = angle0 + self.__last_angle
         # Add data component
         dataang = DataAngle(f"ang_{self.__ctrlID}_{self.__count}", angle)
         ent.add_component(dataang)
