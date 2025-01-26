@@ -5,6 +5,7 @@ from ecsv3.core.component.input.gamepad.gamepad_axis import GamepadAxis
 from ecsv3.core.component.input.gamepad.gamepad_button import GamepadButton
 from ecsv3.core.entity import Entity
 from gamejam.components.scripts.select_move_player import MovePlayer
+from launchers.arcade.default_config import RATIO
 
 
 class PlayerSelect(Entity):
@@ -23,7 +24,7 @@ class PlayerSelect(Entity):
                                 f"bubble_select_{ctrlID}",
                                 priority=10)
         # resize bubble
-        gfx_front.resize(width=200)
+        gfx_front.resize(width=200 * RATIO)
         # set in the middle of the screen
         gfx_front.x = random.randint(-100,100) + x0
         gfx_front.y = random.randint(-100,100) + y0

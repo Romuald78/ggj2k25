@@ -2,12 +2,14 @@ import math
 import random
 
 from ecsv3.core.component.script.script_comp import ScriptComponent
+from launchers.arcade.default_config import RATIO
 
 
 class MoveBubble(ScriptComponent):
 
-    SPEED = 10
-    MAX_DST = 200
+
+    SPEED = 10 * RATIO
+    MAX_DST =  200 * RATIO
 
     COLORS = [(0, 0, 220),
               (255, 255, 64),
@@ -46,7 +48,7 @@ class MoveBubble(ScriptComponent):
             # check collision
             x2 = gfx.x
             y2 = gfx.y
-            colliding = self.__collision(x1, y1, x2, y2, 50)
+            colliding = self.__collision(x1, y1, x2, y2, 50*RATIO)
 
             if tuple(gfx.color)[:3] != (255,255,255):
                 first_big_gfx = gfx
@@ -78,7 +80,7 @@ class MoveBubble(ScriptComponent):
         if first_big_ent is not None:
             x2 = first_big_gfx.x
             y2 = first_big_gfx.y
-            colliding = self.__collision(x1, y1, x2, y2, 75)
+            colliding = self.__collision(x1, y1, x2, y2, 75*RATIO)
 
             if not colliding:
                 # consume all button press

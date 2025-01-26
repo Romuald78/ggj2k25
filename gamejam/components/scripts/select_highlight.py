@@ -1,11 +1,12 @@
 import random
 
 from ecsv3.core.component.script.script_comp import ScriptComponent
+from launchers.arcade.default_config import RATIO
 
 
 class SelectHighLight(ScriptComponent):
 
-    SPEED = 50
+    SPEED = 50 * RATIO
 
     COLORS = [(128,128,255),
               (255,255,128),

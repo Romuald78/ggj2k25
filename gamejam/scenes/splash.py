@@ -6,6 +6,7 @@ from ecsv3.arcade_layer.systems.arcade_gfx_system import ArcadeGfxSystem
 from ecsv3.core.system.input_system import InputSystem
 from ecsv3.core.system.script_system import ScriptSystem
 from gamejam.components.scripts.press_any_key import PressAnyKey
+from launchers.arcade.default_config import RATIO
 
 
 class Splash(Scene):
@@ -45,6 +46,7 @@ class Splash(Scene):
         # Background
         self.__staticGfx = Entity('static_gfx')
         gfx_bg = ArcadeFixed('splash', 'background')
+        gfx_bg.scale *= RATIO
         gfx_bg.x = self.width / 2
         gfx_bg.y = self.height / 2
         self.__staticGfx.add_component(gfx_bg)

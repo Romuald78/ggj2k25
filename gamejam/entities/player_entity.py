@@ -4,6 +4,7 @@ from ecsv3.core.component.input.gamepad.gamepad_axis import GamepadAxis
 from ecsv3.core.component.input.gamepad.gamepad_button import GamepadButton
 from ecsv3.core.entity import Entity
 from gamejam.components.scripts.move1way import MoveOneWay
+from launchers.arcade.default_config import RATIO
 
 
 class PlayerCreation(Entity):
@@ -71,7 +72,7 @@ class PlayerCreation(Entity):
             shadow.resize(height=playerH)
             shadow.anchor = GfxAnchor.BOTTOM
             shadow.x = gfx_idle.x
-            shadow.y = gfx_idle.y - 25
+            shadow.y = gfx_idle.y - 25 * RATIO
             # Move axis (vertical)
             axis = GamepadAxis(f"axisX_{ctrlID}", 'X', gamepad_id=ctrlID)
 
@@ -112,7 +113,7 @@ class PlayerCreation(Entity):
             shadow.resize(height=playerH)
             shadow.anchor = GfxAnchor.BOTTOM
             shadow.x = gfx_idleL.x
-            shadow.y = gfx_idleL.y - 25
+            shadow.y = gfx_idleL.y - 25 * RATIO
 
             # Move axis (vertical)
             axis = GamepadAxis(f"axisX_{ctrlID}", 'X', gamepad_id=ctrlID)

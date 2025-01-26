@@ -4,6 +4,7 @@ import random
 from ecsv3.arcade_layer.components.arcade_gfx import ArcadeFixed
 from ecsv3.core.entity import Entity
 from gamejam.components.data.data_bub_ang import DataAngle
+from launchers.arcade.default_config import RATIO
 
 
 class BubbleFactory:
@@ -54,10 +55,10 @@ class BubbleFactory:
         if self.__count % 12 == 0:
             big = True
         # check if we have to create a big bubble
-        size = 32
+        size = 32 * RATIO
         clr  = (255,255,255)
         if big:
-            size = 65
+            size = 65 * RATIO
             clr = big_color
 
 

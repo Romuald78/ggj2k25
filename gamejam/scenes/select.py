@@ -8,11 +8,12 @@ from ecsv3.core.system.script_system import ScriptSystem
 from gamejam.components.scripts.select_handle_player import HandlePlayer
 from gamejam.components.scripts.select_highlight import SelectHighLight
 from gamejam.entities.player_select import PlayerSelect
+from launchers.arcade.default_config import RATIO
 
 
 class Select(Scene):
 
-    SIZE = 400
+    SIZE = 400 * RATIO
 
     def add_player(self, ctrlID):
 
@@ -21,7 +22,7 @@ class Select(Scene):
             # add entity to the world (and list)
             ent = PlayerSelect(f"player_{ctrlID}", ctrlID,
                                self.width / 2, self.height / 2,
-                               [100, self.width-100, self.height-100, 100],
+                               [100, self.width-100*RATIO, self.height-100*RATIO, 100*RATIO],
                                self.__players, self.__gfx_pos)
             self.add_entity(ent)
             # add player to the list
@@ -129,6 +130,7 @@ class Select(Scene):
         self.__staticGfx = Entity('static_gfx')
         # Background
         gfx_bg = ArcadeFixed('select', 'background')
+        gfx_bg.scale *= RATIO
         gfx_bg.x = self.width / 2
         gfx_bg.y = self.height / 2
         self.__staticGfx.add_component(gfx_bg)

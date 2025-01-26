@@ -12,6 +12,7 @@ from gamejam.components.scripts.gen_bubble import GenBubbleScript
 from gamejam.components.scripts.move_bubble import MoveBubble
 from gamejam.entities.bubble_factory import BubbleFactory
 from gamejam.entities.player_entity import PlayerCreation
+from launchers.arcade.default_config import RATIO
 
 
 class InGame(Scene):
@@ -23,7 +24,7 @@ class InGame(Scene):
                 eltID = 1
         return self.__factories[eltID]
 
-    SIZE = 150
+    SIZE = 150 * RATIO
     MARGIN = SIZE / 5
 
     def __init__(self, world, name):
