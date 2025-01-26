@@ -1,5 +1,7 @@
 import random
 
+import arcade
+
 from ecsv3.arcade_layer.components.arcade_gfx import ArcadeFixed
 from ecsv3.core.entity import Entity
 from ecsv3.core.scenes.scene import Scene, SystemGroup
@@ -19,6 +21,9 @@ class InGame(Scene):
 
     def __init__(self, world, name):
         super().__init__(world, name)
+
+        self.__music = arcade.Sound('resources/sounds/music.wav')
+        self.__music.play()
 
         # =========================================
         # LOCALS
@@ -99,7 +104,8 @@ class InGame(Scene):
             # create move bubble component for each player and add component to the player
             scrmov = MoveBubble(f"mvbub_{ctrlID}",
                                 play_ent.limits,
-                                self.__bubbles[ctrlID])
+                                self.__bubbles[ctrlID],
+                                self.__players[ctrlID], ctrlID, eltID, pos)
             play_ent.add_component(scrmov)
             # add player entity to scene
             self.add_entity(play_ent)
@@ -139,7 +145,6 @@ class InGame(Scene):
         for i in range(4):
             final_gfx[i].angle = final_angles[i]
             # print(final_gfx[i], final_angles[i])
-
 
 
     def exit(self, params=None):

@@ -1,12 +1,12 @@
 from ecsv3.arcade_layer.components.arcade_gfx import ArcadeFixed
 from ecsv3.core.component.gfx.gfx_comp import GfxAnchor
 from ecsv3.core.component.input.gamepad.gamepad_axis import GamepadAxis
+from ecsv3.core.component.input.gamepad.gamepad_button import GamepadButton
 from ecsv3.core.entity import Entity
 from gamejam.components.scripts.move1way import MoveOneWay
 
 
 class PlayerCreation(Entity):
-
 
 
     @property
@@ -31,18 +31,28 @@ class PlayerCreation(Entity):
             gfx_idle.x = (w / 2) + (h * posID[0] / 2)
             gfx_idle.y = (h / 2) * (1 + posID[1])
             gfx_idle.y = max(0, min(h-0, gfx_idle.y))
+
+            shadow = ArcadeFixed(f"shadow",
+                                   f"shadow_{eltID}_{ctrlID}",
+                                   priority=20, )
+            shadow.resize(height=playerH)
+            shadow.anchor = GfxAnchor.BOTTOM
+            shadow.x = gfx_idle.x
+            shadow.y = gfx_idle.y
+
             # Move axis (vertical)
             axis = GamepadAxis(f"axisY_{ctrlID}", 'Y', gamepad_id=ctrlID)
 
             # Move one way script
             move1way = MoveOneWay(f"move1way_{ctrlID}",
-                                  axis, [gfx_idle,],
+                                  axis, [gfx_idle, shadow],
                                   self.__limits, vertical=True,
                                   margin=playerMargin, flipH=flip)
 
             # add components
             self.add_component(axis)
             self.add_component(gfx_idle)
+            self.add_component(shadow)
             self.add_component(move1way)
 
         #--------- HORIZONTAL MOVE (bottom) ---------
@@ -55,18 +65,26 @@ class PlayerCreation(Entity):
             gfx_idle.anchor = GfxAnchor.BOTTOM
             gfx_idle.y = (posID[1] +1) * (h/2)
             gfx_idle.x = (w / 2)
+            shadow = ArcadeFixed(f"shadow",
+                                 f"shadow_{eltID}_{ctrlID}",
+                                 priority=20 )
+            shadow.resize(height=playerH)
+            shadow.anchor = GfxAnchor.BOTTOM
+            shadow.x = gfx_idle.x
+            shadow.y = gfx_idle.y
             # Move axis (vertical)
             axis = GamepadAxis(f"axisX_{ctrlID}", 'X', gamepad_id=ctrlID)
 
             # Move one way script
             move1way = MoveOneWay(f"move1way_{ctrlID}",
-                                  axis, [gfx_idle, ],
+                                  axis, [gfx_idle, shadow],
                                   self.__limits, vertical=False,
                                   margin=playerMargin)
 
             # add components
             self.add_component(axis)
             self.add_component(gfx_idle)
+            self.add_component(shadow)
             self.add_component(move1way)
 
 
@@ -88,19 +106,41 @@ class PlayerCreation(Entity):
             gfx_idleR.y = (posID[1] + 1) * (h / 2)
             gfx_idleR.x = (w / 2)
             gfx_idleR.alpha = 0
+            shadow = ArcadeFixed(f"shadow",
+                                 f"shadow_{eltID}_{ctrlID}",
+                                 priority=20, )
+            shadow.resize(height=playerH)
+            shadow.anchor = GfxAnchor.BOTTOM
+            shadow.x = gfx_idleL.x
+            shadow.y = gfx_idleL.y
+
             # Move axis (vertical)
             axis = GamepadAxis(f"axisX_{ctrlID}", 'X', gamepad_id=ctrlID)
 
-            # Move one way script
-            move1way = MoveOneWay(f"move1way_{ctrlID}",
-                                  axis, [gfx_idleL, gfx_idleR],
-                                  self.__limits, vertical=False,
-                                  margin=playerMargin)
+
 
             # add components
             self.add_component(axis)
             self.add_component(gfx_idleL)
             self.add_component(gfx_idleR)
+            self.add_component(shadow)
+
+            # Move one way script
+            move1way = MoveOneWay(f"move1way_{ctrlID}",
+                                  axis, [gfx_idleL, gfx_idleR, shadow],
+                                  self.__limits, vertical=False,
+                                  margin=playerMargin)
             self.add_component(move1way)
+
+        # BUTTONS
+        buttA = GamepadButton(f"buttonA_{ctrlID}", 'A', gamepad_id=ctrlID)
+        buttB = GamepadButton(f"buttonB_{ctrlID}", 'B', gamepad_id=ctrlID)
+        buttX = GamepadButton(f"buttonX_{ctrlID}", 'X', gamepad_id=ctrlID)
+        buttY = GamepadButton(f"buttonY_{ctrlID}", 'Y', gamepad_id=ctrlID)
+        self.add_component(buttA)
+        self.add_component(buttB)
+        self.add_component(buttX)
+        self.add_component(buttY)
+
 
     #--------- COMMON ---------

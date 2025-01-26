@@ -52,7 +52,7 @@ class BubbleFactory:
         if self.__count % 12 == 0:
             big = True
         # check if we have to create a big bubble
-        size = 25
+        size = 32
         clr  = (255,255,255)
         if big:
             size = 65
@@ -80,14 +80,16 @@ class BubbleFactory:
             self.__last_angle += STEP
         if self.__dest_angle < self.__last_angle:
             self.__last_angle -= STEP
+
         diff = abs(self.__dest_angle - self.__last_angle)
         diff = max(-MAX_ANGLE, min(MAX_ANGLE, diff))
+
         if abs(diff) <= STEP:
             diff = 0
             if self.__dest_angle >= 0:
-                self.__dest_angle = random.randint(-MAX_ANGLE, int(-MAX_ANGLE/2))
+                self.__dest_angle = random.randint(-MAX_ANGLE, int(MAX_ANGLE/2))
             else:
-                self.__dest_angle = random.randint(int(MAX_ANGLE/2), MAX_ANGLE)
+                self.__dest_angle = random.randint(int(-MAX_ANGLE/2), MAX_ANGLE)
 
         # set new angle
         angle = angle0 + self.__last_angle

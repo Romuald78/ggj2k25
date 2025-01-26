@@ -30,7 +30,7 @@ class MoveOneWay(ScriptComponent):
                             max(self.__limits[0] + self.__margin, gfx.x))
 
         # hide one gfx according to move way
-        if len(self.__gfxs) > 1:
+        if len(self.__gfxs) > 2:
             if value > 0 :
                 self.__gfxs[0].alpha = 0
                 self.__gfxs[1].alpha = 255
@@ -44,10 +44,11 @@ class MoveOneWay(ScriptComponent):
             vpos = -10
             vneg = 10
         for gfx in self.__gfxs:
-            if value > 0:
-                gfx.angle = vpos
-            if value < 0:
-                gfx.angle = vneg
+            if 'shadow' not in gfx.name:
+                if value > 0:
+                    gfx.angle = vpos
+                if value < 0:
+                    gfx.angle = vneg
 
     # -----------------------------------------
     # CONSTRUCTOR
