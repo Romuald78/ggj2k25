@@ -12,7 +12,7 @@ from gamejam.entities.player_select import PlayerSelect
 
 class Select(Scene):
 
-    SIZE = 350
+    SIZE = 400
 
     def add_player(self, ctrlID):
 
@@ -51,7 +51,7 @@ class Select(Scene):
                         # now select this player to this hero
                         self.__players[ctrlID]['selected'] = True
                         self.__players[ctrlID]['elemental'] = self.__gfx_pos.index(gp) + 1
-                        gfx_bubble.scale *= 1.75
+                        gfx_bubble.scale *= 2.0
                         gfx_bubble.x = gp.x
                         gfx_bubble.y = gp.y
 
@@ -80,7 +80,7 @@ class Select(Scene):
                 self.__players[ctrlID]['selected'] = False
                 ent = self.__players[ctrlID]['entity']
                 gfx_bubble = ent[f"bubble_select_{ctrlID}"]
-                gfx_bubble.scale /= 1.75
+                gfx_bubble.scale /= 2
         elif len(self.__players) == 0:
             # we can go back to previous scene
             self.world.switch_to_scene('Splash')
@@ -150,10 +150,10 @@ class Select(Scene):
         gfx_h2.x = gfx_h1.x + Select.SIZE + dw
         gfx_h3.x = gfx_h2.x + Select.SIZE + dw
         gfx_h4.x = gfx_h3.x + Select.SIZE + dw
-        gfx_h1.y = 2 * self.height / 3
-        gfx_h2.y = self.height / 4
-        gfx_h3.y = self.height / 4
-        gfx_h4.y = 2 * self.height / 3
+        gfx_h1.y = 2 * self.height / 3.5
+        gfx_h2.y = self.height / 4.1
+        gfx_h3.y = self.height / 4.1
+        gfx_h4.y = 2 * self.height / 3.5
         self.__staticGfx.add_component(gfx_h1)
         self.__staticGfx.add_component(gfx_h2)
         self.__staticGfx.add_component(gfx_h3)

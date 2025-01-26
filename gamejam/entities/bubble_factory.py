@@ -7,6 +7,12 @@ from gamejam.components.data.data_bub_ang import DataAngle
 
 
 class BubbleFactory:
+    COLORS = [
+        (0, 0, 220),
+        (255, 255, 64),
+        (0, 220, 0),
+        (255, 0, 0)
+    ]
 
     @property
     def limits(self):
@@ -24,31 +30,27 @@ class BubbleFactory:
         self.__ctrlID     = ctrlID
         self.__vec_dir    = vec_dir
         # Locals
-        self.__bub2send   = {}
+        self.__bub2send   = []
         self.__count      = 0
         self.__dest_angle = 0   # variation destination
         self.__last_angle = 0    # last variation
 
-        self.__color      = [
-            (0,0,220),
-            (255,255,128),
-            (0,220,0),
-            (255,0,0)
-        ][eltID-1]
+        self.__color      = BubbleFactory.COLORS[eltID-1]
 
-
-
-    def add_big_bubble(self, ctrlID, vec_dir):
-        pass
-        # TODO
-        # self.__enemy_bub.append()
+    def add_big_bubble(self, ctrlID, eltID):
+        # add value at the end of self.__bub2send.
+        clr = BubbleFactory.COLORS[eltID-1]
+        self.__bub2send.append((clr))
 
     def create(self):
+        big_color = self.__color
         # increase count for bubble name
         self.__count += 1
         big = False
-        # if self.__count %  3 == 0 : #and len(self.__bub2send) >= 0:
-        #         big = True
+        if self.__count % 3 == 0 and self.__count % 12 != 0 and len(self.__bub2send) > 0:
+                big = True
+                big_color = self.__bub2send[0]
+                self.__bub2send = self.__bub2send[1:]
         if self.__count % 12 == 0:
             big = True
         # check if we have to create a big bubble
@@ -56,7 +58,7 @@ class BubbleFactory:
         clr  = (255,255,255)
         if big:
             size = 65
-            clr = self.__color
+            clr = big_color
 
 
         # Entity

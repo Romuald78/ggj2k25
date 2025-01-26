@@ -1,4 +1,5 @@
 import math
+import random
 
 from ecsv3.core.component.script.script_comp import ScriptComponent
 
@@ -9,7 +10,7 @@ class MoveBubble(ScriptComponent):
     MAX_DST = 200
 
     COLORS = [(0, 0, 220),
-              (255, 255, 128),
+              (255, 255, 64),
               (0, 220, 0),
               (255, 0, 0)
             ]
@@ -77,7 +78,7 @@ class MoveBubble(ScriptComponent):
         if first_big_ent is not None:
             x2 = first_big_gfx.x
             y2 = first_big_gfx.y
-            colliding = self.__collision(x1, y1, x2, y2, 50)
+            colliding = self.__collision(x1, y1, x2, y2, 75)
 
             if not colliding:
                 # consume all button press
@@ -103,7 +104,12 @@ class MoveBubble(ScriptComponent):
                     # remove first big
                     self.__ent_lst.remove(first_big_ent)
                     first_big_ent.scene.remove_entity(first_big_ent.name)
-
+                    # generate new
+                    eltIDs = [1,2,3,4]
+                    eltIDs.remove(self.__eltID)
+                    otherEltID = random.choice(eltIDs)
+                    otherFact = self.__getOtherFact(otherEltID, self.__eltID)
+                    otherFact.add_big_bubble(self.__ctrlID, self.__eltID)
                 else:
                     # consume all button press
                     rising_flag = False
@@ -124,7 +130,7 @@ class MoveBubble(ScriptComponent):
     # -----------------------------------------
     # CONSTRUCTOR
     # -----------------------------------------
-    def __init__(self, name, limits, ent_lst, player, ctrlID, eltID, pos):
+    def __init__(self, name, limits, ent_lst, player, ctrlID, eltID, pos, bubFactory, cbgetFac):
         super().__init__(name)
         self.__limits  = limits
         self.__ent_lst = ent_lst
@@ -135,7 +141,8 @@ class MoveBubble(ScriptComponent):
         self.__eltID = eltID
         self.__pos = pos
         self.__shadow = self.__player[f"shadow_{self.__eltID}_{self.__ctrlID}"]
-
+        self.__factory = bubFactory
+        self.__getOtherFact = cbgetFac
 
         self.__buttons = []
         # order = LEFT RIGHT TOP BOTTOM
@@ -143,6 +150,6 @@ class MoveBubble(ScriptComponent):
         self.__buttons.append(self.__player[f"buttonX_{self.__ctrlID}"])
         self.__buttons.append(self.__player[f"buttonY_{self.__ctrlID}"])
         self.__buttons.append(self.__player[f"buttonA_{self.__ctrlID}"])
-        
+
 
 

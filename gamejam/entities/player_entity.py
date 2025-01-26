@@ -71,7 +71,7 @@ class PlayerCreation(Entity):
             shadow.resize(height=playerH)
             shadow.anchor = GfxAnchor.BOTTOM
             shadow.x = gfx_idle.x
-            shadow.y = gfx_idle.y
+            shadow.y = gfx_idle.y - 25
             # Move axis (vertical)
             axis = GamepadAxis(f"axisX_{ctrlID}", 'X', gamepad_id=ctrlID)
 
@@ -112,7 +112,7 @@ class PlayerCreation(Entity):
             shadow.resize(height=playerH)
             shadow.anchor = GfxAnchor.BOTTOM
             shadow.x = gfx_idleL.x
-            shadow.y = gfx_idleL.y
+            shadow.y = gfx_idleL.y - 25
 
             # Move axis (vertical)
             axis = GamepadAxis(f"axisX_{ctrlID}", 'X', gamepad_id=ctrlID)

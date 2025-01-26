@@ -16,6 +16,13 @@ from gamejam.entities.player_entity import PlayerCreation
 
 class InGame(Scene):
 
+    def getFactoryFromID(self, eltID, noEltID):
+        while eltID not in self.__factories or eltID == noEltID:
+            eltID = (eltID + 1)
+            if eltID > 4:
+                eltID = 1
+        return self.__factories[eltID]
+
     SIZE = 150
     MARGIN = SIZE / 5
 
@@ -28,8 +35,9 @@ class InGame(Scene):
         # =========================================
         # LOCALS
         # =========================================
-        self.__players = {}
-        self.__bubbles = {}
+        self.__players   = {}
+        self.__bubbles   = {}
+        self.__factories = {}
 
         # =========================================
         # SYSTEMS
@@ -51,13 +59,13 @@ class InGame(Scene):
         self.__staticGfx = Entity('static_gfx')
         # Background
         gfx_bg1 = ArcadeFixed('back_land1', 'back_land1', priority=5)
-        gfx_bg1.color = (200,200,255)
+        gfx_bg1.color = (230,230,255)
         gfx_bg2 = ArcadeFixed('back_land2', 'back_land2', priority=5)
-        gfx_bg2.color = (255,255,200)
+        gfx_bg2.color = (255,255,230)
         gfx_bg3 = ArcadeFixed('back_land3', 'back_land3', priority=5)
-        gfx_bg3.color = (200,255,200)
+        gfx_bg3.color = (230,255,230)
         gfx_bg4 = ArcadeFixed('back_land4', 'back_land4', priority=5)
-        gfx_bg4.color = (255,200,200)
+        gfx_bg4.color = (255,230,230)
         cross   = ArcadeFixed('cross', 'cross', priority=6)
         self.__allgfx_bg = [gfx_bg1, gfx_bg2, gfx_bg3, gfx_bg4, cross]
         for gfx in self.__allgfx_bg:
@@ -90,6 +98,7 @@ class InGame(Scene):
         landW = self.width
         landH = self.height - InGame.SIZE
         for ctrlID in self.__playerCfg:
+
             # PLAYER
             eltID = params[ctrlID]['elemental']
             pos   = positions[i]
@@ -99,20 +108,25 @@ class InGame(Scene):
                                       landW, landH,
                                       InGame.SIZE, InGame.MARGIN)
             self.__players[ctrlID] = play_ent
+
             # add entry into the bubble dictionary
             self.__bubbles[ctrlID] = []
+
+            # Create bub factory (one per player)
+            bub_fact = BubbleFactory(self.width, self.height - InGame.SIZE, ctrlID, pos, eltID)
+            self.__factories[eltID] = bub_fact
+
             # create move bubble component for each player and add component to the player
             scrmov = MoveBubble(f"mvbub_{ctrlID}",
                                 play_ent.limits,
                                 self.__bubbles[ctrlID],
-                                self.__players[ctrlID], ctrlID, eltID, pos)
+                                self.__players[ctrlID], ctrlID, eltID, pos, bub_fact, self.getFactoryFromID)
             play_ent.add_component(scrmov)
+
             # add player entity to scene
             self.add_entity(play_ent)
 
             # CREATE bubble generator entity
-            # Create bub factory (one per player)
-            bub_fact = BubbleFactory(self.width, self.height - InGame.SIZE, ctrlID, pos, eltID)
             bub_gen_ent = Entity(f"bub_gen_ent_{ctrlID}")
             gen_script  = GenBubbleScript(f"gen_bub_scr{ctrlID}", bub_fact, self.__bubbles[ctrlID])
             bub_gen_ent.add_component(gen_script)
