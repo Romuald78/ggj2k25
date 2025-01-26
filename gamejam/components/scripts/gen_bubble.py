@@ -4,7 +4,7 @@ from ecsv3.core.component.script.script_comp import ScriptComponent
 
 class GenBubbleScript(ScriptComponent):
 
-    INTERVAL = 0.25
+    INTERVAL = 0.15
 
     # -----------------------------------------
     # ABSTRACT METHOD

@@ -14,8 +14,8 @@ from gamejam.entities.player_entity import PlayerCreation
 
 class InGame(Scene):
 
-    SIZE = 350
-
+    SIZE = 150
+    MARGIN = SIZE / 5
 
     def __init__(self, world, name):
         super().__init__(world, name)
@@ -46,10 +46,15 @@ class InGame(Scene):
         self.__staticGfx = Entity('static_gfx')
         # Background
         gfx_bg1 = ArcadeFixed('back_land1', 'back_land1', priority=5)
+        gfx_bg1.color = (200,200,255)
         gfx_bg2 = ArcadeFixed('back_land2', 'back_land2', priority=5)
+        gfx_bg2.color = (255,255,200)
         gfx_bg3 = ArcadeFixed('back_land3', 'back_land3', priority=5)
+        gfx_bg3.color = (200,255,200)
         gfx_bg4 = ArcadeFixed('back_land4', 'back_land4', priority=5)
-        self.__allgfx_bg = [gfx_bg1, gfx_bg2, gfx_bg3, gfx_bg4]
+        gfx_bg4.color = (255,200,200)
+        cross   = ArcadeFixed('cross', 'cross', priority=6)
+        self.__allgfx_bg = [gfx_bg1, gfx_bg2, gfx_bg3, gfx_bg4, cross]
         for gfx in self.__allgfx_bg:
             gfx.x = 10000
             gfx.y = 10000
@@ -78,7 +83,7 @@ class InGame(Scene):
         final_angles = []
         final_gfx    = []
         landW = self.width
-        landH = self.height - 250
+        landH = self.height - InGame.SIZE
         for ctrlID in self.__playerCfg:
             # PLAYER
             eltID = params[ctrlID]['elemental']
@@ -86,7 +91,8 @@ class InGame(Scene):
             i += 1
             play_ent = PlayerCreation(f"play_ent_{ctrlID}",
                                       ctrlID, eltID, pos,
-                                      landW, landH)
+                                      landW, landH,
+                                      InGame.SIZE, InGame.MARGIN)
             self.__players[ctrlID] = play_ent
             # add entry into the bubble dictionary
             self.__bubbles[ctrlID] = []
@@ -100,7 +106,7 @@ class InGame(Scene):
 
             # CREATE bubble generator entity
             # Create bub factory (one per player)
-            bub_fact = BubbleFactory(self.width, self.height - 250, pos, ctrlID, pos)
+            bub_fact = BubbleFactory(self.width, self.height - InGame.SIZE, ctrlID, pos, eltID)
             bub_gen_ent = Entity(f"bub_gen_ent_{ctrlID}")
             gen_script  = GenBubbleScript(f"gen_bub_scr{ctrlID}", bub_fact, self.__bubbles[ctrlID])
             bub_gen_ent.add_component(gen_script)

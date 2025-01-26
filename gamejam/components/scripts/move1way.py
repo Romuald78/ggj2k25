@@ -4,7 +4,7 @@ from ecsv3.core.component.script.script_comp import ScriptComponent
 
 class MoveOneWay(ScriptComponent):
 
-    SPEED = 50
+    SPEED = 30
 
     # -----------------------------------------
     # ABSTRACT METHOD
@@ -12,8 +12,6 @@ class MoveOneWay(ScriptComponent):
     def execute(self, delta_time = 1/60):
         # Move + limits
         value = self.__axis.value * MoveOneWay.SPEED * delta_time * 60
-        if abs(value) < 0.15:
-            value = 0
         for gfx in self.__gfxs:
             if self.__vertical:
                 # update position

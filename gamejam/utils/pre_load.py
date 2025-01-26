@@ -24,6 +24,7 @@ PRE_LOAD_IMAGES = {
     'back_land2': f"{IMG_DIR}/landscape/back_2.png",
     'back_land3': f"{IMG_DIR}/landscape/back_3.png",
     'back_land4': f"{IMG_DIR}/landscape/back_4.png",
+    'cross'     : f"{IMG_DIR}/landscape/cross.png",
 
     'bubble_select': f"{IMG_DIR}/ui/bubble.png",
 

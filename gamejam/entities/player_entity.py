@@ -7,11 +7,13 @@ from gamejam.components.scripts.move1way import MoveOneWay
 
 class PlayerCreation(Entity):
 
+
+
     @property
     def limits(self):
         return self.__limits
 
-    def __init__(self, name, ctrlID, eltID, posID, w, h):
+    def __init__(self, name, ctrlID, eltID, posID, w, h, playerH, playerMargin):
         super().__init__(name)
 
         # left right top down
@@ -24,6 +26,7 @@ class PlayerCreation(Entity):
             gfx_idle = ArcadeFixed(f"front_hero{eltID}",
                                    f"front_{eltID}_{ctrlID}",
                                    priority=50, flipH=flip)
+            gfx_idle.resize(height=playerH)
             gfx_idle.anchor = GfxAnchor.BOTTOM
             gfx_idle.x = (w / 2) + (h * posID[0] / 2)
             gfx_idle.y = (h / 2) * (1 + posID[1])
@@ -34,7 +37,8 @@ class PlayerCreation(Entity):
             # Move one way script
             move1way = MoveOneWay(f"move1way_{ctrlID}",
                                   axis, [gfx_idle,],
-                                  self.__limits, vertical=True)
+                                  self.__limits, vertical=True,
+                                  margin=playerMargin)
 
             # add components
             self.add_component(axis)
@@ -47,6 +51,7 @@ class PlayerCreation(Entity):
             gfx_idle = ArcadeFixed(f"back_hero{eltID}",
                                    f"back_{eltID}_{ctrlID}",
                                    priority=60)
+            gfx_idle.resize(height=playerH)
             gfx_idle.anchor = GfxAnchor.BOTTOM
             gfx_idle.y = (posID[1] +1) * (h/2)
             gfx_idle.x = (w / 2)
@@ -56,7 +61,8 @@ class PlayerCreation(Entity):
             # Move one way script
             move1way = MoveOneWay(f"move1way_{ctrlID}",
                                   axis, [gfx_idle, ],
-                                  self.__limits, vertical=False)
+                                  self.__limits, vertical=False,
+                                  margin=playerMargin)
 
             # add components
             self.add_component(axis)
@@ -70,12 +76,14 @@ class PlayerCreation(Entity):
             gfx_idleL = ArcadeFixed(f"front_hero{eltID}",
                                    f"back_{eltID}_{ctrlID}L",
                                    priority=40)
+            gfx_idleL.resize(height=playerH)
             gfx_idleL.anchor = GfxAnchor.BOTTOM
             gfx_idleL.y = (posID[1] + 1) * (h / 2)
             gfx_idleL.x = (w / 2)
             gfx_idleR = ArcadeFixed(f"front_hero{eltID}",
                                    f"back_{eltID}_{ctrlID}R",
                                    priority=40, flipH=True)
+            gfx_idleR.resize(height=playerH)
             gfx_idleR.anchor = GfxAnchor.BOTTOM
             gfx_idleR.y = (posID[1] + 1) * (h / 2)
             gfx_idleR.x = (w / 2)
@@ -86,7 +94,8 @@ class PlayerCreation(Entity):
             # Move one way script
             move1way = MoveOneWay(f"move1way_{ctrlID}",
                                   axis, [gfx_idleL, gfx_idleR],
-                                  self.__limits, vertical=False)
+                                  self.__limits, vertical=False,
+                                  margin=playerMargin)
 
             # add components
             self.add_component(axis)
