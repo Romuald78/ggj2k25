@@ -143,7 +143,6 @@ class MoveBubble(ScriptComponent):
         self.__buttons.append(self.__player[f"buttonX_{self.__ctrlID}"])
         self.__buttons.append(self.__player[f"buttonY_{self.__ctrlID}"])
         self.__buttons.append(self.__player[f"buttonA_{self.__ctrlID}"])
-        print(self.__buttons)
-
+        
 
 

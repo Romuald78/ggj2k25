@@ -22,7 +22,7 @@ class InGame(Scene):
     def __init__(self, world, name):
         super().__init__(world, name)
 
-        self.__music = arcade.Sound('resources/sounds/music.wav')
+        self.__music = arcade.Sound('resources/sounds/music.mp3')
         self.__music.play()
 
         # =========================================
