@@ -2,14 +2,13 @@ import math
 import random
 
 from ecsv3.core.component.script.script_comp import ScriptComponent
+from ecsv3.utils.logs import ECSv3
 from launchers.arcade.default_config import ScreenRatio
 
 
 class MoveBubble(ScriptComponent):
 
-
-
-    COLORS = [(0, 0, 220),
+    COLORS = [(0, 0, 220), 
               (255, 255, 64),
               (0, 220, 0),
               (255, 0, 0)
@@ -26,6 +25,27 @@ class MoveBubble(ScriptComponent):
     # ABSTRACT METHOD
     # -----------------------------------------
     def execute(self, delta_time = 1/60):
+
+        # Store button list in order to use them in the following script
+        if len(self.__buttons) == 0:
+            # order = LEFT RIGHT TOP BOTTOM
+            # (some gamepads have different physical button positions) :
+            # (the reference is the xbox controller)
+            id = int(self.__ctrlID.replace('gamepad_', ''))
+            name = self.entity.scene.world.getGamepadName(id)
+
+            if 'gamecube' in name and 'mayflash' in name:
+                # GAMECUBE config
+                self.__buttons.append(self.__player[f"buttonB_{self.__ctrlID}"])
+                self.__buttons.append(self.__player[f"buttonX_{self.__ctrlID}"])
+                self.__buttons.append(self.__player[f"buttonY_{self.__ctrlID}"])
+                self.__buttons.append(self.__player[f"buttonA_{self.__ctrlID}"])
+            else:
+                # XBOX config (default)
+                self.__buttons.append(self.__player[f"buttonX_{self.__ctrlID}"])
+                self.__buttons.append(self.__player[f"buttonB_{self.__ctrlID}"])
+                self.__buttons.append(self.__player[f"buttonY_{self.__ctrlID}"])
+                self.__buttons.append(self.__player[f"buttonA_{self.__ctrlID}"])
 
         RATIO = ScreenRatio.get_ratio()
         SPEED = 10 * RATIO
@@ -100,9 +120,13 @@ class MoveBubble(ScriptComponent):
                 if rising_flag:
                     # ========== FAIL FIRST BIG  ==========
                     # pressed a button too early or too late
-                    # remove first big
-                    self.__ent_lst.remove(first_big_ent)
-                    first_big_ent.scene.remove_entity(first_big_ent.name)
+                    # remove first big (if needed : may be it has been removed
+                    # because of the distance (it may appear sometimes but very rarely
+                    try:
+                        self.__ent_lst.remove(first_big_ent)
+                        first_big_ent.scene.remove_entity(first_big_ent.name)
+                    except :
+                        ECSv3.info('impossible to remove big bubble !')
             else:
 
                 self.__shadow.color = (255,255,255,128)
@@ -162,11 +186,6 @@ class MoveBubble(ScriptComponent):
         self.__getOtherFact = cbgetFac
         self.__shadow_scale = self.__shadow.scale
         self.__buttons = []
-        # order = LEFT RIGHT TOP BOTTOM
-        self.__buttons.append(self.__player[f"buttonB_{self.__ctrlID}"])
-        self.__buttons.append(self.__player[f"buttonX_{self.__ctrlID}"])
-        self.__buttons.append(self.__player[f"buttonY_{self.__ctrlID}"])
-        self.__buttons.append(self.__player[f"buttonA_{self.__ctrlID}"])
 
 
 

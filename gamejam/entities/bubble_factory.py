@@ -69,7 +69,7 @@ class BubbleFactory:
         if big:
             texture_ref += '_big'
         gfx = ArcadeFixed(texture_ref, f"gfx_{self.__ctrlID}_{self.__count}",
-                          priority=90)
+                          priority=55)
         gfx.x = (self.__limits[0] + self.__limits[1]) / 2
         gfx.y = (self.__limits[2] + self.__limits[3]) / 2
         gfx.resize(width=size)

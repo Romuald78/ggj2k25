@@ -25,7 +25,7 @@ class PlayerCreation(Entity):
             flip = posID[0] == -1
             gfx_idle = ArcadeFixed(f"front_hero{eltID}",
                                    f"front_{eltID}_{ctrlID}",
-                                   priority=50, flipH=flip)
+                                   priority=60, flipH=flip)
             gfx_idle.resize(height=playerH)
             gfx_idle.anchor = GfxAnchor.BOTTOM
             gfx_idle.x = (w / 2) + (h * posID[0] / 2)

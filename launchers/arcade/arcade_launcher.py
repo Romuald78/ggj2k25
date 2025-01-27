@@ -1,9 +1,7 @@
 
 import arcade
-from arcade import Rect, LRBT
 
 from ecsv3.core.system.system_types import EventType
-from ecsv3.core import world
 from launchers.arcade.default_config import *
 
 GAMEPAD_XBOX = [
@@ -64,6 +62,8 @@ class ArcadeApp(arcade.Window):
             ctrl.open(self)
             self.__game_ctrl[ctrl] = i
             i += 1
+
+        self.__world.set_controllers(self.__game_ctrl)
 
     def on_update(self, delta_time):
         self.__world.update(delta_time)

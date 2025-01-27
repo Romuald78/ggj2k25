@@ -23,6 +23,7 @@ class World:
         self.__load_fnt        = load_fnt
         self.__window_app      = None
         self.__debug           = False
+        self.__game_ctrl       = {}
 
     @property
     def debug(self):
@@ -49,6 +50,17 @@ class World:
         for scn in self.__load_scn:
             scn_name, scn_class = scn
             scn_class(self, scn_name)
+
+    def set_controllers(self, ctrlrs):
+        self.__game_ctrl = ctrlrs
+
+    def getGamepadName(self, id1):
+        for ctrlr in self.__game_ctrl:
+            id2 = self.__game_ctrl[ctrlr]
+            if id2 == id1:
+                return ctrlr.device.name.lower()
+        return None
+
 
     # -----------------------------------------
     # PROPERTIES
