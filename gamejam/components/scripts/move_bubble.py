@@ -2,14 +2,12 @@ import math
 import random
 
 from ecsv3.core.component.script.script_comp import ScriptComponent
-from launchers.arcade.default_config import RATIO
+from launchers.arcade.default_config import ScreenRatio
 
 
 class MoveBubble(ScriptComponent):
 
 
-    SPEED = 10 * RATIO
-    MAX_DST =  300 * RATIO
 
     COLORS = [(0, 0, 220),
               (255, 255, 64),
@@ -29,10 +27,16 @@ class MoveBubble(ScriptComponent):
     # -----------------------------------------
     def execute(self, delta_time = 1/60):
 
+        RATIO = ScreenRatio.get_ratio()
+        SPEED = 10 * RATIO
+        MAX_DST = 0.1 * RATIO
+
         first_big_ent = None
         first_big_gfx = None
         x1 = self.__shadow.x
         y1 = self.__shadow.y
+
+        destroy_distance =MAX_DST * abs(self.__limits[1] - self.__limits[0])
 
         self.__shadow.color = (0, 0, 0, 128)
 
@@ -45,12 +49,12 @@ class MoveBubble(ScriptComponent):
                 if 'ang_' in comp.name:
                     ang = comp.angle
             ang = ang * math.pi / 180
-            gfx.move(math.cos(ang) * MoveBubble.SPEED,
-                     math.sin(ang) * MoveBubble.SPEED)
+            gfx.move(math.cos(ang) * SPEED,
+                     math.sin(ang) * SPEED)
             # check collision
             x2 = gfx.x
             y2 = gfx.y
-            colliding = self.__collision(x1, y1, x2, y2, 50*RATIO)
+            colliding = self.__collision(x1, y1, x2, y2, self.__shadow.width / 2)
 
             if tuple(gfx.color)[:3] != (255,255,255) and first_big_gfx is None:
                 first_big_gfx = gfx
@@ -71,10 +75,10 @@ class MoveBubble(ScriptComponent):
                     if v1[i] >= v2[i]:
                         dst = max(dst, abs(v1[i] - v2[i]))
                 # update alpha
-                gfx.alpha = int(255 * max(0, MoveBubble.MAX_DST-dst)/MoveBubble.MAX_DST)
+                gfx.alpha = int(255 * max(0, destroy_distance-dst)/destroy_distance)
 
                 # Remove entity
-                if dst > MoveBubble.MAX_DST:
+                if dst > destroy_distance :
                     # ========= MISS BUBBLE ===========
                     self.__ent_lst.remove(ent)
                     ent.scene.remove_entity(ent.name)
@@ -83,7 +87,7 @@ class MoveBubble(ScriptComponent):
         if first_big_ent is not None:
             x2 = first_big_gfx.x
             y2 = first_big_gfx.y
-            colliding = self.__collision(x1, y1, x2, y2, 85*RATIO)
+            colliding = self.__collision(x1, y1, x2, y2, self.__shadow.width / 2)
 
             if not colliding:
 

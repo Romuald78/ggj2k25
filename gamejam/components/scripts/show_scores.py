@@ -1,7 +1,6 @@
 from ecsv3.arcade_layer.components.arcade_gfx import ArcadeText
 from ecsv3.core.component.gfx.gfx_comp import GfxAnchor
 from ecsv3.core.component.script.script_comp import ScriptComponent
-from launchers.arcade.default_config import RATIO
 
 
 class ShowScore(ScriptComponent):

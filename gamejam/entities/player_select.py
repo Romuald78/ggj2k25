@@ -5,7 +5,7 @@ from ecsv3.core.component.input.gamepad.gamepad_axis import GamepadAxis
 from ecsv3.core.component.input.gamepad.gamepad_button import GamepadButton
 from ecsv3.core.entity import Entity
 from gamejam.components.scripts.select_move_player import MovePlayer
-from launchers.arcade.default_config import RATIO
+from launchers.arcade.default_config import ScreenRatio
 
 
 class PlayerSelect(Entity):
@@ -15,6 +15,10 @@ class PlayerSelect(Entity):
 
     def __init__(self, name, ctrlID, x0, y0, limits, players, gfx_pos):
         super().__init__(name)
+
+        RATIO = ScreenRatio.get_ratio()
+
+
         self.__ctrlID  = ctrlID
         self.__players = players
         self.__gfx_pos = gfx_pos

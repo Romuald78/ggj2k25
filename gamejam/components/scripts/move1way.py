@@ -1,18 +1,20 @@
 
 from ecsv3.core.component.script.script_comp import ScriptComponent
-from launchers.arcade.default_config import RATIO
+from launchers.arcade.default_config import ScreenRatio
 
 
 class MoveOneWay(ScriptComponent):
-
-    SPEED = 30 * RATIO
 
     # -----------------------------------------
     # ABSTRACT METHOD
     # -----------------------------------------
     def execute(self, delta_time = 1/60):
+
+        RATIO = ScreenRatio.get_ratio()
+        SPEED = 30 * RATIO
+
         # Move + limits
-        value = self.__axis.value * MoveOneWay.SPEED * delta_time * 60
+        value = self.__axis.value * SPEED * delta_time * 60
         for gfx in self.__gfxs:
             # turn until angle is 0
             gfx.angle *= 0.66

@@ -6,7 +6,7 @@ from ecsv3.arcade_layer.systems.arcade_gfx_system import ArcadeGfxSystem
 from ecsv3.core.system.input_system import InputSystem
 from ecsv3.core.system.script_system import ScriptSystem
 from gamejam.components.scripts.press_any_key import PressAnyKey
-from launchers.arcade.default_config import RATIO
+from launchers.arcade.default_config import ScreenRatio
 
 
 class Splash(Scene):
@@ -18,7 +18,7 @@ class Splash(Scene):
         # LOCALS
         # =========================================
 
-
+        RATIO = float(ScreenRatio.get_ratio())
 
         # =========================================
         # SYSTEMS

@@ -4,7 +4,7 @@ import random
 from ecsv3.arcade_layer.components.arcade_gfx import ArcadeFixed
 from ecsv3.core.entity import Entity
 from gamejam.components.data.data_bub_ang import DataAngle
-from launchers.arcade.default_config import RATIO
+from launchers.arcade.default_config import ScreenRatio
 
 
 class BubbleFactory:
@@ -23,9 +23,9 @@ class BubbleFactory:
     def counter(self):
         return self.__count
 
-    def __init__(self, w, h, ctrlID, vec_dir, eltID):
+    def __init__(self, w, h, ctrlID, vec_dir, eltID, yref):
         # left right top down
-        limits = [w/2 - h/2, w/2 + h/2, h, 0]
+        limits = [w/2 - h/2, w/2 + h/2, h + yref, yref]
         self.__limits     = limits
         # parameters
         self.__ctrlID     = ctrlID
@@ -44,6 +44,7 @@ class BubbleFactory:
         self.__bub2send.append((clr))
 
     def create(self):
+        RATIO = float(ScreenRatio.get_ratio())
         big_color = self.__color
         # increase count for bubble name
         self.__count += 1
@@ -60,7 +61,6 @@ class BubbleFactory:
         if big:
             size = 65 * RATIO
             clr = big_color
-
 
         # Entity
         ent = Entity(f"bub_ent_{self.__ctrlID}_{self.__count}")

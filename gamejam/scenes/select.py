@@ -10,14 +10,16 @@ from ecsv3.core.system.script_system import ScriptSystem
 from gamejam.components.scripts.select_handle_player import HandlePlayer
 from gamejam.components.scripts.select_highlight import SelectHighLight
 from gamejam.entities.player_select import PlayerSelect
-from launchers.arcade.default_config import RATIO
+from launchers.arcade.default_config import ScreenRatio
 
 
 class Select(Scene):
 
-    SIZE = 400 * RATIO
 
     def add_player(self, ctrlID):
+
+        RATIO = float(ScreenRatio.get_ratio())
+        SIZE = 400 * RATIO
 
         if ctrlID not in self.__players:
             # player has just arrived
@@ -42,7 +44,7 @@ class Select(Scene):
             for gp in self.__gfx_pos:
                 # print(gp.name, gp.x, gp.y)
                 dst2 = gfx_bubble.distance2To(gp)
-                if dst2 <= Select.SIZE**2 / 4:
+                if dst2 <= SIZE**2 / 4:
                     # we can select it : check if there is no another player
                     ok2select = True
                     for p in self.__players:
@@ -96,6 +98,9 @@ class Select(Scene):
     def __init__(self, world, name):
         super().__init__(world, name)
 
+        RATIO = float(ScreenRatio.get_ratio())
+        SIZE = 400 * RATIO
+
         # =========================================
         # LOCALS
         # =========================================
@@ -147,19 +152,19 @@ class Select(Scene):
         gfx_h2 = ArcadeFixed('front_hero2', 'front_hero2')
         gfx_h3 = ArcadeFixed('front_hero3', 'front_hero3')
         gfx_h4 = ArcadeFixed('front_hero4', 'front_hero4')
-        gfx_h1.resize(height=Select.SIZE)
-        gfx_h2.resize(height=Select.SIZE)
-        gfx_h3.resize(height=Select.SIZE)
-        gfx_h4.resize(height=Select.SIZE)
+        gfx_h1.resize(height=SIZE)
+        gfx_h2.resize(height=SIZE)
+        gfx_h3.resize(height=SIZE)
+        gfx_h4.resize(height=SIZE)
         gfx_h1.color = (255,255,255,192)
         gfx_h2.color = (255,255,255,192)
         gfx_h3.color = (255,255,255,192)
         gfx_h4.color = (255,255,255,192)
-        dw = (self.width - (4 * Select.SIZE)) / 5
-        gfx_h1.x = dw + Select.SIZE/2
-        gfx_h2.x = gfx_h1.x + Select.SIZE + dw
-        gfx_h3.x = gfx_h2.x + Select.SIZE + dw
-        gfx_h4.x = gfx_h3.x + Select.SIZE + dw
+        dw = (self.width - (4 * SIZE)) / 5
+        gfx_h1.x = dw + SIZE/2
+        gfx_h2.x = gfx_h1.x + SIZE + dw
+        gfx_h3.x = gfx_h2.x + SIZE + dw
+        gfx_h4.x = gfx_h3.x + SIZE + dw
         gfx_h1.y = 2 * self.height / 3.5
         gfx_h2.y = self.height / 4.1
         gfx_h3.y = self.height / 4.1

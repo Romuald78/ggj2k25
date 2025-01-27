@@ -4,6 +4,7 @@ from arcade import Rect, LRBT
 
 from ecsv3.core.system.system_types import EventType
 from ecsv3.core import world
+from launchers.arcade.default_config import *
 
 GAMEPAD_XBOX = [
     'A', 'B', 'X', 'Y', 'LB', 'RB', 'BACK', 'START', '???', 'L', 'R'
@@ -126,14 +127,18 @@ class ArcadeApp(arcade.Window):
 
 
 def run(world, config):
+
+    w = arcade.get_screens()[0].width
+    h = arcade.get_screens()[0].height
+    ScreenRatio.set_ratio(w, h)
+
     # Create arcade app and configure it
     app = ArcadeApp(world,
-                    width=config['pixels_width'],
-                    height=config['pixels_height'],
-                    title='ECSv3 Game App')
-    app.set_fullscreen(config['full_screen'])
+                    width=w,
+                    height=h,
+                    title=config['title'])
     app.set_mouse_visible(config['mouse_visible'])
-    app.center_window()
+    app.set_fullscreen(config['full_screen'])
     # Show time !
     arcade.run()
 
