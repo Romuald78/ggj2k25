@@ -10,9 +10,11 @@ from ecsv3.arcade_layer.systems.arcade_gfx_system import ArcadeGfxSystem
 from ecsv3.core.system.input_system import InputSystem
 from ecsv3.core.system.script_system import ScriptSystem
 from gamejam.components.scripts.gen_bubble import GenBubbleScript
+from gamejam.components.scripts.gen_bubble_sides import MoveBubbleSides
 from gamejam.components.scripts.move_bubble import MoveBubble
 from gamejam.components.scripts.show_scores import ShowScore
 from gamejam.entities.bubble_factory import BubbleFactory
+from gamejam.entities.bubble_sides import BubbleSide
 from gamejam.entities.player_entity import PlayerCreation
 from launchers.arcade.default_config import ScreenRatio
 
@@ -79,10 +81,10 @@ class InGame(Scene):
         backing.y = self.height / 2
         self.__staticGfx.add_component(backing)
 
-        hro1 = ArcadeFixed('front_hero1', 'face1', priority=80)
-        hro2 = ArcadeFixed('front_hero2', 'face2', priority=80)
-        hro3 = ArcadeFixed('front_hero3', 'face3', priority=80)
-        hro4 = ArcadeFixed('front_hero4', 'face4', priority=80)
+        hro1 = ArcadeFixed('front_hero1', 'face1', priority=56)
+        hro2 = ArcadeFixed('front_hero2', 'face2', priority=56)
+        hro3 = ArcadeFixed('front_hero3', 'face3', priority=56)
+        hro4 = ArcadeFixed('front_hero4', 'face4', priority=56)
         self.__staticGfx.add_component(hro1)
         self.__staticGfx.add_component(hro2)
         self.__staticGfx.add_component(hro3)
@@ -103,6 +105,18 @@ class InGame(Scene):
         self.__colors = [(128,128,255), (255,255,128), (128,255,128), (255,128,128)]
 
         self.__sprlst = None
+
+        # BUBBLE SIDES
+        RATIO = ScreenRatio.get_ratio()
+        CHAR_SIZE = 150 * RATIO
+        bandW = (self.width - (self.height - CHAR_SIZE)) / 2
+        # Limits (Left Right Top Bottom)
+        limitL = [0, bandW, self.height, 0]
+        limitR = [self.width - bandW, self.width, self.height, 0]
+        genbubL = BubbleSide('genbubL', limitL, 200 * RATIO)
+        genbubR = BubbleSide('genbubR', limitR, 200 * RATIO)
+        self.add_entity(genbubL)
+        self.add_entity(genbubR)
 
 
     def enter(self, params=None):

@@ -39,7 +39,7 @@ class ArcadeApp(arcade.Window):
         self.__world.set_window(self)
 
 
-        # TODO
+        # TODO add camera
         # # Add camera
         # self.__main_camera = arcade.camera.Camera2D(
         #                                 viewport=LRBT(0, self.screen.width,

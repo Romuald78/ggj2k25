@@ -5,7 +5,7 @@ import PyInstaller.__main__
 
 from ecsv3.utils.logs import ECSv3
 
-VERSION = '0.0.1'
+VERSION = '0.9.9'
 
 if __name__ == '__main__':
     # cleaning build and dist subfolders

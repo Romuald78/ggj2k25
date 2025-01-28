@@ -24,7 +24,6 @@ class Fade(ScriptComponent):
             prc = 1.0 - abs(self.__timer - hlf) / hlf
             self.__gfx[self.__idx].alpha = int(255 * prc)
         else:
-            # TODO : jump to splash screen instead of in game
             self.entity.world.switch_to_scene('Splash')
 
 

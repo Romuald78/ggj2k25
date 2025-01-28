@@ -3,10 +3,6 @@ from ecsv3.utils.logs import ECSv3
 
 # TODO update priority of scripts and update sorted lists in related-system !!
 # TODO handle remove from memory
-# TODO add subclasses for GFX
-#   Fixed sprite
-#   Animated sprite
-#   Text sprite
 # TODO add subclasses for SFX
 #   Sound/Music
 #   loops / cursors / callbacks when reached a milestone / ...

@@ -8,7 +8,7 @@ from launchers.arcade.default_config import ScreenRatio
 
 class MoveBubble(ScriptComponent):
 
-    COLORS = [(0, 0, 220), 
+    COLORS = [(0, 0, 220),
               (255, 255, 64),
               (0, 220, 0),
               (255, 0, 0)
@@ -74,7 +74,7 @@ class MoveBubble(ScriptComponent):
             # check collision
             x2 = gfx.x
             y2 = gfx.y
-            colliding = self.__collision(x1, y1, x2, y2, self.__shadow.width / 2)
+            colliding = self.__collision(x1, y1, x2, y2, self.__shadow.width / 1.5)
 
             if tuple(gfx.color)[:3] != (255,255,255) and first_big_gfx is None:
                 first_big_gfx = gfx
