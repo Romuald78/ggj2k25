@@ -1,23 +1,24 @@
 import random
 
 import arcade
-from arcade import Sprite
 
 from ecsv3.arcade_layer.components.arcade_gfx import ArcadeFixed
 from ecsv3.core.entity import Entity
+from ecsv3.core.loader.loader import ResourceLoader
 from ecsv3.core.scenes.scene import Scene, SystemGroup
 from ecsv3.arcade_layer.systems.arcade_gfx_system import ArcadeGfxSystem
 from ecsv3.core.system.input_system import InputSystem
 from ecsv3.core.system.script_system import ScriptSystem
 from gamejam.components.scripts.gen_bubble import GenBubbleScript
-from gamejam.components.scripts.gen_bubble_sides import MoveBubbleSides
 from gamejam.components.scripts.move_bubble import MoveBubble
-from gamejam.components.scripts.show_scores import ShowScore
 from gamejam.entities.bubble_factory import BubbleFactory
 from gamejam.entities.bubble_sides import BubbleSide
 from gamejam.entities.player_entity import PlayerCreation
+from gamejam.utils.path_utils import get_path
 from launchers.arcade.default_config import ScreenRatio
 
+
+SND_DIR = get_path('resources/sounds')
 
 class InGame(Scene):
 
@@ -57,8 +58,8 @@ class InGame(Scene):
 
 
 
-        self.__music = arcade.Sound('resources/sounds/music.mp3')
-
+        # TODO run sound object (from loader)
+        self.__music = ResourceLoader.getSoundReference('music')
 
 
 

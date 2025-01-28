@@ -5,7 +5,7 @@ import PyInstaller.__main__
 
 from ecsv3.utils.logs import ECSv3
 
-VERSION = '0.9.9'
+VERSION = '1.0.0'
 
 if __name__ == '__main__':
     # cleaning build and dist subfolders
@@ -31,7 +31,7 @@ if __name__ == '__main__':
         '--onefile',
         '--add-data=resources:resources',
         '--exclude-module=export_exec',
-        '--exclude-module=launchers.arcade.configs.debug'
+        '--exclude-module=launchers.arcade.configs.debug',
     ])
 
     # Rename executable if OK

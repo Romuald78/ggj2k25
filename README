@@ -1,0 +1,62 @@
+===================================================
+ELEMENTAL ALTAR : Bubble Edition
+V1.0.0
+===================================================
+
+This game has been created during the Global Game Jam 2025 between Friday, the 24th and Sunday the 26th of January.
+
+The Global Game Jam gographical site was :
+    ESIEE-IT Engineer School
+    Pontoise - West suburb of Paris
+    FRANCE
+
+This game is only playable with USB Gamepads.
+It has been tested with XBOX-360 and XBOX-One controllers, and even with Gamecube controllers via a Mayflash Adapter.
+This means, the button mapping seems to be correct at least with these brands of gamepads.
+
+The game is playable between 2 and 4 players localy, on the same computer.
+When you are in the splash screen, juste press any button to enter in the player select screen.
+Then you have to press the 'A' button once to register : a bubble appears and you can move it with your left stick.
+As you move the bubble over a character, this last one starts to be lighter and you can press 'A' to select it.
+When done it is not possible to move anymore. But you still can press 'B' to unselect the character.
+If you don't have any character selected you can press 'B' once again to unregister, and if you are the only one registered player, you return to the splash screen
+
+If at least two players are registered, when any of them press 'A' the game starts.
+
+===================================================
+GAME RULES/MECHANICS
+===================================================
+
+When the game starts, the registered characters are randomized around the square game area.
+Each character can move along one edge of the area (either up/down for players on the left and right edges, or left/right for the characters on the top/bottom edges).
+
+Some bubble are thrown form the center of the area and are moving toward each player edge.
+
+The main goal for this game is to catch as many bubbles as possible and get points.
+Each small bubble, when colliding with the 'feet' of a character, is destroyed and the linked player gets one point (+1).
+
+Sometimes, a bigger and colored bubble spawns : here is the main mechanic of the game :
+When the character feet collides with the big colored bubble, the player shall press a specific button.
+
+The game area is divided in 4 triangles, with colors related to their characters.
+The position of the color on the map gives you which button shall be pressed.
+If you try to catch a big red bubble and the red area (character name : DOOM) is located on the top of the screen, you shall press the upper button on your gamepad (Y button)
+It you try to catch a big blue bubble and the blue area (character name : ONDINE) is located on the left of the screen, you shall press the left button on your controller (B button for Gamecube, X button for XBOX)
+
+When a player succeed to catch a big bubble (collision + correct button to press), he gets five points (+5), and this big bubble is randomly sent back to one of the opponents.
+If a big bubble is missed, it does nothing, except the player does not mark points.
+If a player press a button to get a big bubble, but either the button is not correct, or the big bubble is not colliding with the character feet, the big bubble disappears (and you miss 5 points).
+So be careful about timing.
+
+With only 2 players the game is not so fun as you only have 2 buttons to remember.
+But when playing the game with 3 or 4 players, players will need skills to perform.
+
+For the moment there is no end condition, though the game will never stop.
+
+If you press ESC, the program will exit.
+If you press F10, some debug information such as the FPS is displayed.
+If you press F11, the game switches between full screen and windowed-mode
+
+Enjoy !
+
+

@@ -15,16 +15,17 @@ class LoaderScene(Scene):
         tex = arcade.load_texture(filepath)
         return tex
     
-    def __init__(self, world, next_scene_name, images={}, fonts={}):
+    def __init__(self, world, next_scene_name, images={}, fonts={}, sounds={}):
         super().__init__(world, 'Loader scene')
         self.__next_scene = next_scene_name
-        self.__img = images
-        self.__N     = len(self.__img)
-        self.__count = LoaderScene.MIN_TIME
-        self.__name  = None
-        self.__names = arcade.SpriteList()
+        self.__img     = images
+        self.__count   = LoaderScene.MIN_TIME
+        self.__name    = None
+        self.__names   = arcade.SpriteList()
         self.__loading = False
-        self.__fonts = fonts
+        self.__fonts   = fonts
+        self.__sounds  = sounds
+        self.__N       = len(self.__img) + len(self.__sounds)
         # Load all fonts
         for fnt in self.__fonts:
             ResourceLoader.addFont(self.__fonts[fnt])
@@ -53,6 +54,26 @@ class LoaderScene(Scene):
                 if ResourceLoader.getTextureFilepath(name) is None:
                     ECSv3.error(f"Failure when trying to load texture '{name}'")
 
+        elif len(self.__sounds) > 0:
+            if self.__count >= LoaderScene.MIN_TIME:
+                self.__count -= LoaderScene.MIN_TIME
+                # get first resource from dictionary
+                names = list(self.__sounds.keys())
+                name = names[0]
+                self.__name = arcade.create_text_sprite(text=f"Loading sound '{name}'...",
+                                                        width=self.width, font_size=32,
+                                                        align='center',
+                                                        anchor_x='left',
+                                                        font_name='Super Kinds',
+                                                        color=(255,255,255,200))
+                self.__names.clear()
+                self.__names.append(self.__name)
+                ResourceLoader.addSound(name, self.__sounds[name])
+                # remove
+                del self.__sounds[name]
+                if ResourceLoader.getSoundFilepath(name) is None:
+                    ECSv3.error(f"Failure when trying to load sound '{name}'")
+
         elif self.__count >= LoaderScene.MIN_TIME:
             if not self.__loading:
                 self.__loading = True
@@ -74,8 +95,9 @@ class LoaderScene(Scene):
                 self.world.switch_to_scene(self.__next_scene)
 
     def draw(self):
-        coef  = 1 - len(self.__img) / self.__N
-        coef2 = 1 - (len(self.__img)+1) / self.__N
+        nelt = len(self.__img) + len(self.__sounds)
+        coef  = 1 - nelt / self.__N
+        coef2 = 1 - (nelt+1) / self.__N
         W, H = self.world.window.get_size()
         x   = W * 0.125
         W2  = W * 0.75

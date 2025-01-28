@@ -1,16 +1,8 @@
-import os
-import sys
-
-def get_path(relative_path):
-    if getattr(sys, 'frozen', False) and hasattr(sys, '_MEIPASS'):
-        bundle_dir = os.path.join(sys._MEIPASS, relative_path)
-    else:
-        bundle_dir = os.path.join(os.path.dirname(__file__), '..', '..', relative_path)
-    return bundle_dir
-
+from gamejam.utils.path_utils import get_path
 
 IMG_DIR = get_path('resources/images')
 FNT_DIR = get_path('resources/fonts')
+SND_DIR = get_path('resources/sounds')
 
 PRE_LOAD_IMAGES = {
     # INTRO backgrounds
@@ -45,7 +37,14 @@ PRE_LOAD_IMAGES = {
     'bubble_big': f"{IMG_DIR}/ui/bubble_big.png"
 }
 
-
 PRE_LOAD_FONTS = {
     'superkinds'  : f"{FNT_DIR}/super_kinds.ttf",
+}
+
+PRE_LOAD_SOUNDS = {
+    'music'  : f"{SND_DIR}/music.mp3",
+    'select1': f"{SND_DIR}/select1.mp3",
+    'select2': f"{SND_DIR}/select2.mp3",
+    'select3': f"{SND_DIR}/select3.mp3",
+    'select4': f"{SND_DIR}/select4.mp3",
 }

@@ -107,7 +107,7 @@ class MoveBubble(ScriptComponent):
         if first_big_ent is not None:
             x2 = first_big_gfx.x
             y2 = first_big_gfx.y
-            colliding = self.__collision(x1, y1, x2, y2, self.__shadow.width / 2)
+            colliding = self.__collision(x1, y1, x2, y2, self.__shadow.width / 1.75)
 
             if not colliding:
 

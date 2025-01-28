@@ -3,6 +3,7 @@ import arcade
 from ecsv3.arcade_layer.components.arcade_gfx import ArcadeFixed
 from ecsv3.core.component.input.gamepad.gamepad_button import GamepadButton
 from ecsv3.core.entity import Entity
+from ecsv3.core.loader.loader import ResourceLoader
 from ecsv3.core.scenes.scene import Scene, SystemGroup
 from ecsv3.arcade_layer.systems.arcade_gfx_system import ArcadeGfxSystem
 from ecsv3.core.system.input_system import InputSystem
@@ -107,10 +108,10 @@ class Select(Scene):
         self.__players = {}
 
         self.__voices = []
-        self.__voices.append(arcade.Sound('resources/sounds/select1.mp3'))
-        self.__voices.append(arcade.Sound('resources/sounds/select2.mp3'))
-        self.__voices.append(arcade.Sound('resources/sounds/select3.mp3'))
-        self.__voices.append(arcade.Sound('resources/sounds/select4.mp3'))
+        self.__voices.append(ResourceLoader.getSoundReference('select1'))
+        self.__voices.append(ResourceLoader.getSoundReference('select2'))
+        self.__voices.append(ResourceLoader.getSoundReference('select3'))
+        self.__voices.append(ResourceLoader.getSoundReference('select4'))
 
         # =========================================
         # SYSTEMS

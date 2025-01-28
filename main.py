@@ -5,7 +5,7 @@ from ecsv3.core.loader.loader import ResourceLoader
 from ecsv3.core.scenes.loader_scene import LoaderScene
 from ecsv3.core.world import World
 from gamejam.scenes.select import Select
-from gamejam.utils.pre_load import PRE_LOAD_IMAGES, PRE_LOAD_FONTS
+from gamejam.utils.pre_load import PRE_LOAD_IMAGES, PRE_LOAD_FONTS, PRE_LOAD_SOUNDS
 from gamejam.scenes.ingame import InGame
 from gamejam.scenes.intro import Intro
 from gamejam.scenes.splash import Splash
@@ -25,10 +25,12 @@ if __name__ == '__main__':
     # ====================================
     ResourceLoader.set_texture_callback(LoaderScene.load_image)
     ResourceLoader.set_font_callback   (arcade.load_font   )
+    ResourceLoader.set_sound_callback  (arcade.Sound)
 
     # list all resources
     img = PRE_LOAD_IMAGES
     fnt = PRE_LOAD_FONTS
+    snd = PRE_LOAD_SOUNDS
 
     # list all scene classes
     scn = [
@@ -39,7 +41,7 @@ if __name__ == '__main__':
     ]
 
     # Create world reference
-    world = World('ECSv3 Game App', load_img=img, load_scn=scn, load_fnt=fnt)
+    world = World('ECSv3 Game App', load_img=img, load_scn=scn, load_fnt=fnt, load_snd=snd)
 
     # Get default config
     defaultCfg = DEFAULT_CONFIG

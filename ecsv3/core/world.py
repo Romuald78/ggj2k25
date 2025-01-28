@@ -10,7 +10,7 @@ class World:
     # -----------------------------------------
     # CONSTRUCTOR
     # -----------------------------------------
-    def __init__(self, name='world0', load_img={}, load_scn=[], load_fnt={}):
+    def __init__(self, name='world0', load_img={}, load_scn=[], load_fnt={}, load_snd={}):
         self.__name            = name
         self.__scenes          = {}
         self.__current_scene   = None
@@ -21,6 +21,7 @@ class World:
         self.__load_scn        = load_scn
         self.__load_img        = load_img
         self.__load_fnt        = load_fnt
+        self.__load_snd        = load_snd
         self.__window_app      = None
         self.__debug           = False
         self.__game_ctrl       = {}
@@ -40,7 +41,7 @@ class World:
         # if there is something to run
         if len(self.__load_scn) > 0 and len(self.__load_img) > 0:
             first_scene_name = self.__load_scn[0][0]
-            LoaderScene(self, first_scene_name, self.__load_img, self.__load_fnt)
+            LoaderScene(self, first_scene_name, self.__load_img, self.__load_fnt, self.__load_snd)
         else:
             ECSv3.error("No scene to add to this world !")
 
