@@ -92,9 +92,9 @@ class Select(Scene):
             # we can go back to previous scene
             self.world.switch_to_scene('Splash')
 
-        print("After REMOVE")
-        for ctrlID in self.__players:
-            print(ctrlID, self.__players[ctrlID])
+        # print("After REMOVE")
+        # for ctrlID in self.__players:
+        #     print(ctrlID, self.__players[ctrlID])
 
     def __init__(self, world, name):
         super().__init__(world, name)

@@ -18,4 +18,4 @@ class ScreenRatio:
         if valueW <= 0 or valueH <= 0:
             raise ValueError(f"bad values for RATIO = {valueW}/{valueH} !")
         ScreenRatio.__ratio = min(valueW / 1920, valueH / 1080)
-        print('Screen ratio', ScreenRatio.__ratio)
+        # print('Screen ratio', ScreenRatio.__ratio)

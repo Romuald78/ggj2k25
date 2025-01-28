@@ -33,7 +33,7 @@ class ResourceLoader:
             snd = ResourceLoader.__snd_cb(snd_path)
             # store sound
             ResourceLoader.__sounds[name] = { 'path' : snd_path, 'sound' : snd}
-        print(ResourceLoader.__sounds)
+        # print(ResourceLoader.__sounds)
 
     @staticmethod
     def getSoundFilepath(name):

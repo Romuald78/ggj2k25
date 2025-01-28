@@ -18,7 +18,7 @@ class HandlePlayer(ScriptComponent):
         if self.__buttRmv.falling_edge:
             # reset risingEdge
             dummy = self.__buttRmv.rising_edge
-            print('last source REMOVE = ', )
+            # print('last source REMOVE = ', )
             self.__cbRmv(self.__buttRmv.last_source)
 
 
